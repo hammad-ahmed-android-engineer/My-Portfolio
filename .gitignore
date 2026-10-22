@@ -1,0 +1,141 @@
+# ==============================================================================
+# Git Ignore Configuration for Hammad Ahmed Portfolio Web Application
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Dependencies
+# ------------------------------------------------------------------------------
+node_modules/
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# ------------------------------------------------------------------------------
+# Next.js Build Outputs & Caches
+# ------------------------------------------------------------------------------
+.next/
+/.next/
+out/
+/out/
+build/
+/build/
+dist/
+/dist/
+.turbo/
+
+# ------------------------------------------------------------------------------
+# TypeScript Caches
+# ------------------------------------------------------------------------------
+*.tsbuildinfo
+next-env.d.ts
+
+# ------------------------------------------------------------------------------
+# Environment Variables & Confidential Credentials
+# ------------------------------------------------------------------------------
+.env
+.env*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key
+*.cert
+*.crt
+*.pfx
+*.p12
+
+# ------------------------------------------------------------------------------
+# Debug Logs & Diagnostic Reports
+# ------------------------------------------------------------------------------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ------------------------------------------------------------------------------
+# Testing & Code Coverage
+# ------------------------------------------------------------------------------
+coverage/
+/coverage/
+.nyc_output/
+*.lcov
+
+# ------------------------------------------------------------------------------
+# IDE & Code Editor Artifacts
+# ------------------------------------------------------------------------------
+# Visual Studio Code
+.vscode/*
+!.vscode/extensions.json
+*.code-workspace
+
+# JetBrains / Android Studio / IntelliJ IDEA / WebStorm
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text / Eclipse / NetBeans
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
+
+# Vim / Emacs swap and backup files
+*.swp
+*.swo
+*~
+.#*
+
+# ------------------------------------------------------------------------------
+# Operating System Generated Files
+# ------------------------------------------------------------------------------
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.stackdump
+
+# Linux
+.directory
+.fuse_hidden*
+
+# ------------------------------------------------------------------------------
+# Hosting & Cloud Deployment Caches
+# ------------------------------------------------------------------------------
+.vercel
+.netlify
+.serverless
+
+# ------------------------------------------------------------------------------
+# Temporary Files & AI Agent Workspace Artifacts
+# ------------------------------------------------------------------------------
+*.tmp
+*.temp
+temp/
+tmp/
+.temp/
+.tmp/
+.gemini/
+.antigravity/

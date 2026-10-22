@@ -1,0 +1,1149 @@
+  /**
+  * @file globals.css
+  * @description Global Stylesheet. Defines CSS variables, Tailwind directives, and foundational styles.
+  * 
+  * This file is part of the core application architecture. 
+  * Please ensure any modifications adhere to the established design patterns.
+  */
+
+  @import "tailwindcss";
+  @plugin "@tailwindcss/typography";
+
+  /* Configure Tailwind v4 to use class-based dark mode instead of media queries */
+  @custom-variant dark (&:is(.dark *));
+
+  :root {
+    --background: #fdfdfc;
+    --foreground: #1a1a1a;
+    --primary: #f59e0b;
+    /* Amber 500 */
+    --primary-foreground: #ffffff;
+    --secondary: #f3f4f6;
+    /* Gray 100 */
+    --secondary-foreground: #111827;
+    --accent: #f59e0b;
+    /* Amber 500 */
+    --accent-foreground: #ffffff;
+    --destructive: #ef4444;
+    /* Red 500 */
+    --destructive-foreground: #ffffff;
+    --success: #10b981;
+    /* Emerald 500 */
+    --success-foreground: #ffffff;
+    --warning: #f59e0b;
+    /* Amber 500 */
+    --warning-foreground: #ffffff;
+    --info: #0ea5e9;
+    /* Sky 500 */
+    --info-foreground: #ffffff;
+    --muted: #f3f4f6;
+    --muted-foreground: #6b7280;
+    --border: #e5e7eb;
+    --radius: 0.75rem;
+
+    /* ========================================
+      TYPOGRAPHY
+      ======================================== */
+
+    --text-xs: clamp(0.75rem, 0.72rem + 0.1vw, 0.875rem);
+    --text-sm: clamp(0.8125rem, 0.78rem + 0.12vw, 0.9375rem);
+    --text-base: clamp(0.875rem, 0.82rem + 0.18vw, 1rem);
+    --text-lg: clamp(1rem, 0.92rem + 0.25vw, 1.125rem);
+
+    --text-xl: clamp(1.125rem, 1rem + 0.4vw, 1.375rem);
+    --text-2xl: clamp(1.25rem, 1.05rem + 0.65vw, 1.75rem);
+    --text-3xl: clamp(1.5rem, 1.15rem + 1vw, 2.25rem);
+    --text-4xl: clamp(1.75rem, 1.25rem + 1.4vw, 3rem);
+    --text-5xl: clamp(2rem, 1.35rem + 2vw, 3.75rem);
+
+
+    /* ========================================
+      SPACING
+      ======================================== */
+
+    --space-xs: clamp(0.25rem, 0.2rem + 0.15vw, 0.5rem);
+    --space-sm: clamp(0.5rem, 0.4rem + 0.25vw, 0.75rem);
+    --space-md: clamp(0.75rem, 0.6rem + 0.4vw, 1.25rem);
+    --space-lg: clamp(1rem, 0.75rem + 0.7vw, 2rem);
+    --space-xl: clamp(1.5rem, 1rem + 1.2vw, 3rem);
+    --space-2xl: clamp(2rem, 1.25rem + 2vw, 5rem);
+
+
+    /* ========================================
+      LINE HEIGHT
+      ======================================== */
+
+    --leading-tight: 1.15;
+    --leading-snug: 1.3;
+    --leading-normal: 1.5;
+    --leading-relaxed: 1.65;
+
+
+    /* ========================================
+      FONT WEIGHTS
+      ======================================== */
+
+    --weight-regular: 400;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+    --weight-bold: 700;
+
+    /* Breakpoints pinned to px so the fluid base font-size below never shifts
+      the sm/md/lg/xl breakpoints (rem-based breakpoints would otherwise move
+      with the root font size and break layouts like the 768px footer). */
+    /* Extra Small Phones */
+    --breakpoint-4xs: 280px;
+    --breakpoint-3xs: 320px;
+    --breakpoint-2xs: 360px;
+    --breakpoint-xs: 375px;
+    --breakpoint-xs-sm: 414px;
+    --breakpoint-sm: 480px;
+
+    /* Small Devices */
+    --breakpoint-sm-md: 540px;
+    --breakpoint-md-sm: 576px;
+    --breakpoint-md: 600px;
+    --breakpoint-md-lg: 640px;
+
+    /* Tablets / Small Laptops */
+    --breakpoint-lg-sm: 720px;
+    --breakpoint-lg-md: 768px;
+    --breakpoint-lg-lg: 800px;
+    --breakpoint-xl-sm: 834px;
+    --breakpoint-xl-md: 864px;
+    --breakpoint-xl-lg: 896px;
+
+    /* Large Tablets / Small Desktop */
+    --breakpoint-2xl-sm: 960px;
+    --breakpoint-2xl-md: 1024px;
+    --breakpoint-2xl-lg: 1080px;
+    --breakpoint-3xl-sm: 1152px;
+    --breakpoint-3xl-md: 1200px;
+
+    /* Desktop */
+    --breakpoint-3xl-lg: 1280px;
+    --breakpoint-4xl-sm: 1366px;
+    --breakpoint-4xl-md: 1400px;
+    --breakpoint-4xl-lg: 1440px;
+
+    /* Large Desktop */
+    --breakpoint-5xl-sm: 1536px;
+    --breakpoint-5xl-md: 1600px;
+    --breakpoint-5xl-lg: 1680px;
+    --breakpoint-6xl-sm: 1728px;
+    --breakpoint-6xl-md: 1792px;
+    --breakpoint-6xl-lg: 1920px;
+
+    /* Very Large Screens */
+    --breakpoint-7xl-sm: 2048px;
+    --breakpoint-7xl-md: 2160px;
+    --breakpoint-7xl-lg: 2304px;
+    --breakpoint-8xl-sm: 2560px;
+    --breakpoint-8xl-md: 2880px;
+    --breakpoint-8xl-lg: 3200px;
+
+    /* Ultra Wide */
+    --breakpoint-9xl: 3440px;
+    --breakpoint-10xl: 3840px;
+    --breakpoint-11xl: 5120px;
+  }
+
+  @theme {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-warning: var(--warning);
+    --color-warning-foreground: var(--warning-foreground);
+    --color-info: var(--info);
+    --color-info-foreground: var(--info-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+
+    --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-heading: var(--font-outfit), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --radius-lg: var(--radius);
+
+
+  }
+
+  .dark {
+    --background: #0f1115;
+    --foreground: #f3f4f6;
+    --primary: #fbbf24;
+    /* Amber 400 */
+    --primary-foreground: #111827;
+    --secondary: #1f2937;
+    /* Gray 800 */
+    --secondary-foreground: #f9fafb;
+    --accent: #fbbf24;
+    /* Amber 400 */
+    --accent-foreground: #111827;
+    --destructive: #ef4444;
+    /* Red 500 */
+    --destructive-foreground: #ffffff;
+    --success: #10b981;
+    /* Emerald 500 */
+    --success-foreground: #ffffff;
+    --warning: #fbbf24;
+    /* Amber 400 */
+    --warning-foreground: #111827;
+    --info: #38bdf8;
+    /* Sky 400 */
+    --info-foreground: #111827;
+    --muted: #1f2937;
+    --muted-foreground: #9ca3af;
+    --border: #374151;
+  }
+
+  /* Font metric overrides to minimize layout shift during font loading/swap.
+    These values are calibrated for Inter (body) and Outfit (headings) against
+    the system-ui fallback stack so that line-height and x-height remain stable. */
+  @font-face {
+    font-family: "Inter-fallback";
+    src: local("Arial");
+    size-adjust: 100.06%;
+    ascent-override: 90%;
+    descent-override: 25%;
+    line-gap-override: 0%;
+  }
+
+  @font-face {
+    font-family: "Outfit-fallback";
+    src: local("Arial");
+    size-adjust: 94.5%;
+    ascent-override: 92%;
+    descent-override: 24%;
+    line-gap-override: 0%;
+  }
+
+  html {
+    /* Dynamic configuration-driven fluid base size */
+    font-size: var(--fluid-base-size);
+
+    /* Prevent automatic font size inflation in mobile browsers */
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+
+    /* Normalize default line height and letter spacing for uniform layout metrics */
+    line-height: 1.5;
+    scroll-behavior: smooth;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans), "Inter-fallback";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeSpeed;
+    /* Optimize layout metrics and rendering performance */
+  }
+
+  h1,
+  .h1,
+  h2,
+  .h2,
+  h3,
+  .h3,
+  h4,
+  .h4,
+  h5,
+  .h5,
+  h6,
+  .h6 {
+    font-family: var(--font-heading), "Outfit-fallback";
+    font-weight: 700;
+    color: var(--foreground);
+    letter-spacing: -0.015em;
+  }
+
+  h1,
+  .h1 {
+    font-size: 2.25rem;
+    /* 36px */
+    line-height: 1.2;
+  }
+
+  h2,
+  .h2 {
+    font-size: 1.875rem;
+    /* 30px */
+    line-height: 1.25;
+  }
+
+  h3,
+  .h3 {
+    font-size: 1.5rem;
+    /* 24px */
+    line-height: 1.3;
+  }
+
+  h4,
+  .h4 {
+    font-size: 1.25rem;
+    /* 20px */
+    line-height: 1.35;
+  }
+
+  h5,
+  .h5 {
+    font-size: 1.125rem;
+    /* 18px */
+    line-height: 1.4;
+  }
+
+  h6,
+  .h6 {
+    font-size: 1rem;
+    /* 16px */
+    line-height: 1.45;
+  }
+
+  /* Reset default browser typography for form controls, buttons, and textareas to ensure perfect inheritance */
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+  }
+
+  /* Reset default browser typography for form controls, buttons, and textareas to ensure perfect inheritance */
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+  }
+
+  /* Ensure monospace elements use proper font stack with metric-adjusted fallback */
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    line-height: 1.5;
+  }
+
+  /* --------------------------------------
+    TAILWIND TYPOGRAPHY (PROSE) CUSTOMIZATION
+    Aligns @tailwindcss/typography plugin with our fluid heading system
+    and design tokens for consistent cross-browser rendering.
+    -------------------------------------- */
+
+  @theme {
+    /* Override prose heading sizes to match our fluid clamp() system */
+    --prose-headings-font-weight: 700;
+    --prose-headings-line-height: 1.15;
+    --prose-headings-letter-spacing: -0.015em;
+    --prose-headings-font-family: var(--font-heading), "Outfit-fallback";
+
+    /* Body text in prose */
+    --prose-font-family: var(--font-sans), "Inter-fallback";
+    --prose-line-height: 1.6;
+    --prose-font-size: 1rem;
+    /* Base, will scale with html fluid size */
+
+    /* Colors */
+    --prose-color: var(--foreground);
+    --prose-muted-color: var(--muted-foreground);
+    --prose-links-color: var(--accent);
+    --prose-links-font-weight: 500;
+    --prose-headings-color: var(--foreground);
+    --prose-code-color: var(--foreground);
+    --prose-code-background: var(--muted);
+    --prose-code-font-weight: 500;
+    --prose-code-font-size: 0.875rem;
+    --prose-quote-color: var(--muted-foreground);
+    --prose-quote-border-color: var(--border);
+    --prose-hr-border-color: var(--border);
+    --prose-th-border-color: var(--border);
+    --prose-td-border-color: var(--border);
+    --prose-invert-color: var(--foreground);
+    --prose-invert-muted-color: var(--muted-foreground);
+    --prose-invert-links-color: var(--accent);
+    --prose-invert-headings-color: var(--foreground);
+    --prose-invert-code-color: var(--foreground);
+    --prose-invert-code-background: var(--muted);
+    --prose-invert-quote-color: var(--muted-foreground);
+    --prose-invert-quote-border-color: var(--border);
+    --prose-invert-hr-border-color: var(--border);
+    --prose-invert-th-border-color: var(--border);
+    --prose-invert-td-border-color: var(--border);
+
+    /* Spacing */
+    --prose-space-y: 1.25rem;
+    --prose-padding-y: 0;
+    --prose-headings-margin-top: 1.5em;
+    --prose-headings-margin-bottom: 0.5em;
+    --prose-paragraph-margin-top: 1em;
+    --prose-paragraph-margin-bottom: 1em;
+    --prose-ul-margin-top: 0.5em;
+    --prose-ul-margin-bottom: 0.5em;
+    --prose-ol-margin-top: 0.5em;
+    --prose-ol-margin-bottom: 0.5em;
+    --prose-li-margin-top: 0.25em;
+    --prose-li-margin-bottom: 0.25em;
+    --prose-img-margin-top: 1.5em;
+    --prose-img-margin-bottom: 1.5em;
+    --prose-figure-margin-top: 2em;
+    --prose-figure-margin-bottom: 2em;
+    --prose-figcaption-margin-top: 0.75em;
+    --prose-table-margin-top: 1.5em;
+    --prose-table-margin-bottom: 1.5em;
+  }
+
+  /* Additional prose utilities for consistent sizing */
+  .prose-sm {
+    font-size: 0.875rem;
+  }
+
+  .prose-base {
+    font-size: 1rem;
+  }
+
+  .prose-lg {
+    font-size: 1.125rem;
+  }
+
+  /* Ensure prose headings use our fluid clamp sizing */
+  .prose h1 {
+    font-size: clamp(1.25rem, 2vw + 0.5rem, 1.75rem);
+    line-height: 1.15;
+  }
+
+  .prose h2 {
+    font-size: clamp(1.125rem, 1.5vw + 0.5rem, 1.5rem);
+    line-height: 1.2;
+  }
+
+  .prose h3 {
+    font-size: clamp(0.8125rem, 0.75rem + 0.25vw, 0.9375rem);
+    line-height: 1.3;
+  }
+
+  .prose h4 {
+    font-size: clamp(0.8125rem, 0.75rem + 0.25vw, 0.9375rem);
+    line-height: 1.35;
+  }
+
+  .prose h5 {
+    font-size: clamp(0.75rem, 0.6875rem + 0.25vw, 0.8125rem);
+    line-height: 1.4;
+  }
+
+  .prose h6 {
+    font-size: clamp(0.6875rem, 0.625rem + 0.25vw, 0.75rem);
+    line-height: 1.45;
+  }
+
+  /* --------------------------------------
+    REACT QUILL LIST FIXES
+    -------------------------------------- */
+
+  /* 1. Frontend (Prose wrappers): Force native list styles for Quill and standard HTML output */
+  .prose ul {
+    list-style-type: disc !important;
+    padding-left: 1.25rem !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .prose ol {
+    list-style-type: decimal !important;
+    padding-left: 1.25rem !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .prose li {
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.25rem !important;
+    display: list-item !important;
+  }
+
+  .prose li[data-list="bullet"] {
+    list-style-type: disc !important;
+  }
+
+  .prose li[data-list="ordered"] {
+    list-style-type: decimal !important;
+  }
+
+  .prose ol:has(li[data-list="bullet"]) {
+    list-style-type: disc !important;
+  }
+
+  .prose li[data-list]::before {
+    display: none !important;
+    /* Hide Quill's internal pseudo-markers on the frontend */
+  }
+
+  /* 2. Admin Panel (inside editor): Ensure Quill's bullet markers are perfectly rendered */
+  .ql-editor li[data-list="bullet"]::before {
+    content: '\2022' !important;
+    /* Force strict dot bullet character */
+  }
+
+  .ql-editor ol,
+  .ql-editor ul {
+    padding-left: 1.5em !important;
+  }
+
+  .ql-editor li {
+    list-style-type: none !important;
+    /* Quill needs native markers off inside the editor */
+  }
+
+  /* Ensure all select dropdown arrows have comfortable breathing room on the right side */
+  select {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.30rem center !important;
+    background-size: 1.1em !important;
+    padding-right: 2.25rem !important;
+  }
+
+  select::-ms-expand {
+    display: none !important;
+  }
+
+  /* Utility to hide scrollbars while preserving swipable behavior */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+
+  /* Ensure proper touch targets for interactive elements on mobile */
+  @media (pointer: coarse) {
+
+    button,
+    a,
+    [role="button"],
+    input:not([type="range"]),
+    select,
+    textarea {
+      min-height: 44px;
+    }
+
+    /* Reset min-height for inline and structural list/menu navigation links */
+    footer a,
+    nav a,
+    .prose a {
+      min-height: auto;
+    }
+  }
+
+  /* Safe area support for notched devices */
+  @supports (padding: env(safe-area-inset-bottom)) {
+    body {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+  }
+
+  /* Ensure images never overflow their containers */
+  img,
+  video,
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Prevent horizontal overflow globally */
+  /* Use overflow-x: clip (not hidden) so it doesn't create a scroll container,
+    which would otherwise break position: sticky (e.g. breed page sidebar). */
+  html,
+  body,
+  #__next {
+    overflow-x: clip;
+    max-width: 100vw;
+    width: 100%;
+  }
+
+  /* Ultra-wide safety net (>=1800px, large desktop screens):
+     Anchors the root, main content, and footer to the viewport edges so
+     nothing can ever drift off to the right and become invisible. This
+     applies globally to every page. */
+  body {
+    margin-inline: auto;
+  }
+
+  /* Responsive typography - fluid scaling with strict line-height standardization */
+  h1 {
+    font-size: clamp(1.25rem, 2vw + 0.5rem, 1.75rem);
+    line-height: 1.15;
+  }
+
+  h2 {
+    font-size: clamp(1.125rem, 1.5vw + 0.5rem, 1.5rem);
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-size: clamp(0.8125rem, 0.75rem + 0.25vw, 0.9375rem);
+    line-height: 1.3;
+  }
+
+  h4 {
+    font-size: clamp(0.8125rem, 0.75rem + 0.25vw, 0.9375rem);
+    line-height: 1.35;
+  }
+
+  h5 {
+    font-size: clamp(0.75rem, 0.6875rem + 0.25vw, 0.8125rem);
+    line-height: 1.4;
+  }
+
+  h6 {
+    font-size: clamp(0.6875rem, 0.625rem + 0.25vw, 0.75rem);
+    line-height: 1.45;
+  }
+
+  /* Container query for card layouts */
+  @container (max-width: 400px) {
+    .card-grid-item {
+      padding: 0.75rem;
+    }
+  }
+
+  /* Safe area padding for modern mobile devices */
+  @supports (padding: env(safe-area-inset-right)) {
+    .safe-area-padding {
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+    }
+  }
+
+  /* Better line-clamp utilities */
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Improve tap highlight on mobile */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+
+
+  /* Ensure overflow hidden on body when modals/drawers open */
+  body.overflow-hidden {
+    overflow: hidden !important;
+  }
+
+  /* --------------------------------------
+    BREED DETAIL PAGE – Section Headings
+    Overrides the global h1-h6 base rule
+    (font-weight 700, letter-spacing -0.015em)
+    so these section dividers stay small/muted.
+    -------------------------------------- */
+  .breed-section-heading {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+
+
+  /* --------------------------------------
+    CUSTOM 404 DOG PAGE ANIMATIONS (PUSH THE 0)
+    -------------------------------------- */
+  @keyframes dog-push-sequence {
+    0% {
+      transform: translate3d(200px, 0, 0) scaleX(-1);
+    }
+
+    50% {
+      transform: translate3d(0px, 0, 0) scaleX(-1);
+    }
+
+    /* snout touches 0 at center */
+    53% {
+      transform: translate3d(25px, 0, 0) scaleX(-1);
+    }
+
+    /* steps back to celebrate */
+    90% {
+      transform: translate3d(25px, 0, 0) scaleX(-1);
+    }
+
+    /* wags tail */
+    95%,
+    100% {
+      transform: translate3d(200px, 0, 0) scaleX(-1);
+    }
+
+    /* resets */
+  }
+
+  @keyframes digit-0-roll {
+    0% {
+      transform: translate3d(200px, 0, 0) rotate(180deg);
+    }
+
+    50% {
+      transform: translate3d(0px, 0, 0) rotate(0deg);
+    }
+
+    53% {
+      transform: translate3d(0px, 0, 0) scale(1.1);
+    }
+
+    /* wobble impact bounce */
+    56% {
+      transform: translate3d(0px, 0, 0) scale(1);
+    }
+
+    90% {
+      transform: translate3d(0px, 0, 0);
+    }
+
+    95%,
+    100% {
+      transform: translate3d(200px, 0, 0) rotate(180deg);
+    }
+  }
+
+  @keyframes leg-swing-l {
+
+    0%,
+    100% {
+      transform: rotate(0deg);
+    }
+
+    5%,
+    15%,
+    25%,
+    35%,
+    45% {
+      transform: rotate(20deg);
+    }
+
+    10%,
+    20%,
+    30%,
+    40% {
+      transform: rotate(-20deg);
+    }
+
+    46%,
+    90% {
+      transform: rotate(0deg);
+    }
+
+    /* stand still */
+    91%,
+    99% {
+      transform: rotate(20deg);
+    }
+  }
+
+  @keyframes leg-swing-r {
+
+    0%,
+    100% {
+      transform: rotate(0deg);
+    }
+
+    5%,
+    15%,
+    25%,
+    35%,
+    45% {
+      transform: rotate(-20deg);
+    }
+
+    10%,
+    20%,
+    30%,
+    40% {
+      transform: rotate(20deg);
+    }
+
+    46%,
+    90% {
+      transform: rotate(0deg);
+    }
+
+    /* stand still */
+    91%,
+    99% {
+      transform: rotate(-20deg);
+    }
+  }
+
+  @keyframes tail-wag-happy {
+
+    0%,
+    45% {
+      transform: rotate(0deg);
+    }
+
+    46%,
+    50%,
+    54%,
+    58%,
+    62%,
+    66%,
+    70%,
+    74%,
+    78%,
+    82%,
+    86%,
+    90% {
+      transform: rotate(25deg);
+    }
+
+    48%,
+    52%,
+    56%,
+    60%,
+    64%,
+    68%,
+    72%,
+    76%,
+    80%,
+    84%,
+    88% {
+      transform: rotate(-25deg);
+    }
+
+    95%,
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+
+  @keyframes tongue-pant-fast {
+
+    0%,
+    45%,
+    90%,
+    100% {
+      transform: scaleY(0.7);
+    }
+
+    46%,
+    89% {
+      transform: scaleY(1.2);
+    }
+  }
+
+  .anim-dog-push-container {
+    animation: dog-push-sequence 8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    transform-box: fill-box;
+  }
+
+  .anim-digit-0-roll-container {
+    animation: digit-0-roll 8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+
+  .anim-dog-leg-l {
+    animation: leg-swing-l 8s linear infinite;
+    transform-origin: 50% 0%;
+    transform-box: fill-box;
+  }
+
+  .anim-dog-leg-r {
+    animation: leg-swing-r 8s linear infinite;
+    transform-origin: 50% 0%;
+    transform-box: fill-box;
+  }
+
+  .anim-dog-tail-wag {
+    animation: tail-wag-happy 8s ease-in-out infinite;
+    transform-origin: 100% 100%;
+    transform-box: fill-box;
+  }
+
+  .anim-dog-tongue-pant {
+    animation: tongue-pant-fast 0.2s ease-in-out infinite;
+    transform-origin: 50% 0%;
+    transform-box: fill-box;
+  }
+
+  /* Alphabet filter button styles to resolve text contrast rendering issues across light/dark modes */
+  .alphabet-filter-container button {
+    min-height: auto !important;
+    height: 28px !important;
+    width: 28px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    border-radius: 8px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    flex-shrink: 0 !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  /* Auto-expand the "All" button for proper fitting of text */
+  .alphabet-filter-container button:first-child {
+    width: auto !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .alphabet-active-btn {
+    background-color: var(--foreground) !important;
+    color: var(--background) !important;
+    font-weight: 700 !important;
+  }
+
+  .alphabet-inactive-btn {
+    background-color: var(--muted) !important;
+    color: var(--foreground) !important;
+  }
+
+  .alphabet-inactive-btn:hover {
+    background-color: var(--border) !important;
+    color: var(--foreground) !important;
+    transform: translateY(-1.5px);
+  }
+
+  /* --------------------------------------
+    FULL-PAGE DOG LOADER (DogLoader screen variant)
+    Ambient blobs, bobbing dog, ground shadow,
+    rising paw prints, and label dots.
+    -------------------------------------- */
+  @keyframes dog-bob-load {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-14px);
+    }
+  }
+
+  @keyframes dog-shadow-load {
+
+    0%,
+    100% {
+      transform: translateX(-50%) scaleX(1);
+      opacity: 0.25;
+    }
+
+    50% {
+      transform: translateX(-50%) scaleX(0.82);
+      opacity: 0.15;
+    }
+  }
+
+  @keyframes blob-drift-load {
+
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    50% {
+      transform: translate3d(24px, -28px, 0) scale(1.12);
+    }
+  }
+
+  @keyframes paw-rise-load {
+    0% {
+      transform: translate3d(0, 0, 0) rotate(0deg);
+      opacity: 0;
+    }
+
+    12% {
+      opacity: 0.7;
+    }
+
+    100% {
+      transform: translate3d(18px, -170px, 0) rotate(28deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes dot-bounce-load {
+
+    0%,
+    80%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.35;
+    }
+
+    40% {
+      transform: translateY(-6px);
+      opacity: 1;
+    }
+  }
+
+  .anim-dog-bob-load {
+    animation: dog-bob-load 2.4s ease-in-out infinite;
+  }
+
+  .anim-dog-shadow-load {
+    animation: dog-shadow-load 2.4s ease-in-out infinite;
+  }
+
+  .anim-blob-drift-load {
+    animation: blob-drift-load 7s ease-in-out infinite;
+  }
+
+  .anim-paw-rise-load {
+    animation: paw-rise-load 6s linear infinite;
+  }
+
+  .anim-dot-bounce-load {
+    animation: dot-bounce-load 1.2s ease-in-out infinite;
+  }
+
+  /* --------------------------------------
+    BALL PLAY (DogLoader) – dog plays catch
+    with an original CSS ball while loading.
+    Ball stays at ground level, rolling along
+    in front of the dog's paws with low hops.
+    -------------------------------------- */
+  @keyframes ball-move-play-load {
+
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+
+    28% {
+      transform: translateX(70px);
+    }
+
+    48% {
+      transform: translateX(104px);
+    }
+
+    68% {
+      transform: translateX(118px);
+    }
+
+    86% {
+      transform: translateX(52px);
+    }
+  }
+
+  @keyframes ball-hop-play-load {
+
+    0%,
+    30%,
+    62%,
+    100% {
+      transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+
+    48% {
+      transform: translate3d(0, -52px, 0) rotate(-360deg);
+    }
+
+    88% {
+      transform: translate3d(0, -18px, 0) rotate(-560deg);
+    }
+  }
+
+  @keyframes ball-shadow-play-load {
+
+    0%,
+    30%,
+    62%,
+    100% {
+      transform: translateX(-50%) scaleX(1);
+      opacity: 0.22;
+    }
+
+    48%,
+    88% {
+      transform: translateX(-50%) scaleX(0.5);
+      opacity: 0.08;
+    }
+  }
+
+  .anim-ball-move-play-load {
+    animation: ball-move-play-load 2.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+
+  .anim-ball-hop-play-load {
+    animation: ball-hop-play-load 2.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+
+  .anim-ball-shadow-play-load {
+    animation: ball-shadow-play-load 2.8s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+
+    .anim-dog-bob-load,
+    .anim-dog-shadow-load,
+    .anim-blob-drift-load,
+    .anim-paw-rise-load,
+    .anim-dot-bounce-load,
+    .anim-ball-move-play-load,
+    .anim-ball-hop-play-load,
+    .anim-ball-shadow-play-load {
+      animation: none !important;
+    }
+  }

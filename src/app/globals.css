@@ -1,0 +1,384 @@
+/* ============================================================
+   Portfolio — App-Level Global Stylesheet
+   Follows the conventions established in /globals.css (root).
+   ============================================================ */
+
+@import "tailwindcss";
+
+/* Configure Tailwind v4 to use class-based dark mode instead of media queries */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Prevent tap callout on iOS */
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: #09090b;
+  color: #f4f4f5;
+}
+
+/* Prevent horizontal overflow globally */
+html,
+body,
+#__next {
+  overflow-x: clip;
+  max-width: 100vw;
+  width: 100%;
+}
+
+/* ----------------------------------------------------------------
+   BREAKPOINT CSS CUSTOM PROPERTIES
+   Pinned to px so fluid root font-size clamp() never shifts them.
+   ---------------------------------------------------------------- */
+:root {
+  /* Extra Small Phones */
+  --breakpoint-4xs: 280px;
+  --breakpoint-3xs: 320px;
+  --breakpoint-2xs: 360px;
+  --breakpoint-xs: 375px;
+  --breakpoint-xs-sm: 414px;
+  --breakpoint-sm: 480px;
+
+  /* Small Devices */
+  --breakpoint-sm-md: 540px;
+  --breakpoint-md-sm: 576px;
+  --breakpoint-md: 600px;
+  --breakpoint-md-lg: 640px;
+
+  /* Tablets / Small Laptops */
+  --breakpoint-lg-sm: 720px;
+  --breakpoint-lg-md: 768px;
+  --breakpoint-lg-lg: 800px;
+  --breakpoint-xl-sm: 834px;
+  --breakpoint-xl-md: 864px;
+  --breakpoint-xl-lg: 896px;
+
+  /* Large Tablets / Small Desktop */
+  --breakpoint-2xl-sm: 960px;
+  --breakpoint-2xl-md: 1024px;
+  --breakpoint-2xl-lg: 1080px;
+  --breakpoint-3xl-sm: 1152px;
+  --breakpoint-3xl-md: 1200px;
+
+  /* Desktop */
+  --breakpoint-3xl-lg: 1280px;
+  --breakpoint-4xl-sm: 1366px;
+  --breakpoint-4xl-md: 1400px;
+  --breakpoint-4xl-lg: 1440px;
+
+  /* Large Desktop */
+  --breakpoint-5xl-sm: 1536px;
+  --breakpoint-5xl-md: 1600px;
+  --breakpoint-5xl-lg: 1680px;
+  --breakpoint-6xl-sm: 1728px;
+  --breakpoint-6xl-md: 1792px;
+  --breakpoint-6xl-lg: 1920px;
+
+  /* Very Large Screens */
+  --breakpoint-7xl-sm: 2048px;
+  --breakpoint-7xl-md: 2160px;
+  --breakpoint-7xl-lg: 2304px;
+  --breakpoint-8xl-sm: 2560px;
+  --breakpoint-8xl-md: 2880px;
+  --breakpoint-8xl-lg: 3200px;
+
+  /* Ultra Wide */
+  --breakpoint-9xl: 3440px;
+  --breakpoint-10xl: 3840px;
+  --breakpoint-11xl: 5120px;
+}
+
+/* ----------------------------------------------------------------
+   FONT — Force system-level cross-browser normalization for controls
+   ---------------------------------------------------------------- */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+/* ----------------------------------------------------------------
+   IMAGES / MEDIA — never overflow containers
+   ---------------------------------------------------------------- */
+img,
+video,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ----------------------------------------------------------------
+   CARD EQUAL-HEIGHT HELPERS
+   All grid card sections use `display: grid` which naturally makes
+   siblings equal height in the same row. We add `flex flex-col`
+   inside each card so their internal content stretches correctly.
+   ---------------------------------------------------------------- */
+
+/* Metric cards — Quantifiable Impact in Production */
+.metric-card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Project cards — Featured Systems & Applications */
+.project-card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Skill category cards — Core Competencies & Stack */
+.skill-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Education cards */
+.education-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Architecture layer cards */
+.arch-layer-card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ----------------------------------------------------------------
+   ANIMATIONS
+   ---------------------------------------------------------------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ----------------------------------------------------------------
+   SCROLLBARS
+   ---------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(120, 120, 120, 0.25);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(120, 120, 120, 0.45);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ----------------------------------------------------------------
+   RESPONSIVE — MICRO PHONES  (≤ 280px / --breakpoint-4xs)
+   ---------------------------------------------------------------- */
+@media (max-width: 280px) {
+  .max-w-7xl {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+
+  section:not(#overview) {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  #overview {
+    padding-top: 4.75rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  h1 {
+    font-size: clamp(1.1rem, 8vw, 1.4rem) !important;
+  }
+
+  h2 {
+    font-size: clamp(1rem, 6vw, 1.25rem) !important;
+  }
+}
+
+/* ----------------------------------------------------------------
+   RESPONSIVE — TINY PHONES  (281px – 320px / --breakpoint-3xs)
+   ---------------------------------------------------------------- */
+@media (min-width: 281px) and (max-width: 320px) {
+  .max-w-7xl {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  section:not(#overview) {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+
+  #overview {
+    padding-top: 5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+
+  h1 {
+    font-size: clamp(1.25rem, 7.5vw, 1.6rem) !important;
+    line-height: 1.15 !important;
+  }
+
+  h2 {
+    font-size: clamp(1.05rem, 5.5vw, 1.3rem) !important;
+  }
+}
+
+/* ----------------------------------------------------------------
+   RESPONSIVE — SMALL PHONES  (321px – 480px / --breakpoint-sm)
+   ---------------------------------------------------------------- */
+@media (min-width: 321px) and (max-width: 480px) {
+  section:not(#overview) {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  #overview {
+    padding-top: 5.5rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  /* All grids become single column on small phones unless explicitly 2-col */
+  .grid.grid-cols-1.md\:grid-cols-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid.grid-cols-1.md\:grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ----------------------------------------------------------------
+   RESPONSIVE — TABLETS  (481px – 768px / --breakpoint-lg-md)
+   ---------------------------------------------------------------- */
+@media (min-width: 481px) and (max-width: 768px) {
+  /* 3-col grids → 2-col on tablet */
+  .grid.grid-cols-1.md\:grid-cols-3 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ----------------------------------------------------------------
+   RESPONSIVE — LARGE SCREENS  (≥ 1920px / --breakpoint-6xl-lg)
+   ---------------------------------------------------------------- */
+@media (min-width: 1920px) {
+  .max-w-7xl {
+    max-width: 1600px;
+  }
+
+  body {
+    font-size: 1.05rem;
+  }
+}
+
+/* ----------------------------------------------------------------
+   RESPONSIVE — ULTRA LARGE  (≥ 2560px / --breakpoint-8xl-sm)
+   ---------------------------------------------------------------- */
+@media (min-width: 2560px) {
+  .max-w-7xl {
+    max-width: 2000px;
+  }
+
+  body {
+    font-size: 1.15rem;
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   SAFE AREA — notched / punched devices (iPhone X+)
+   ---------------------------------------------------------------- */
+@supports (padding: env(safe-area-inset-bottom)) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+@supports (padding: env(safe-area-inset-right)) {
+  .safe-area-padding {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* ----------------------------------------------------------------
+   TOUCH TARGETS — comfortable 44px min-height on coarse pointer
+   ---------------------------------------------------------------- */
+@media (pointer: coarse) {
+  button,
+  a,
+  [role="button"],
+  input:not([type="range"]),
+  select,
+  textarea {
+    min-height: 44px;
+  }
+
+  footer a,
+  nav a,
+  .prose a {
+    min-height: auto;
+  }
+}
+
+/* ----------------------------------------------------------------
+   REDUCED MOTION
+   ---------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
