@@ -48,7 +48,7 @@ export function EdgeLightingApp({
   setCornerRoundness,
 }: EdgeLightingAppProps) {
   return (
-    <div className="flex-1 flex flex-col p-3.5 overflow-y-auto space-y-3.5 bg-gradient-to-b from-zinc-900 via-zinc-950 to-black text-xs select-none">
+    <div className="flex-1 min-h-0 flex flex-col p-3.5 overflow-y-auto overscroll-contain space-y-3.5 bg-gradient-to-b from-zinc-900 via-zinc-950 to-black text-xs select-none">
       {/* Header */}
       <div className="flex items-center justify-between pb-2 border-b border-zinc-800">
         <div className="flex items-center gap-2">

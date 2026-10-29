@@ -26,6 +26,7 @@ export function SarHajjApp() {
   const [dutyShift] = useState("Morning Shift: 08:00 AM – 04:00 PM");
   const [dutySupervisor] = useState("Capt. Fahad Al-Otaibi");
   const [selectedStationFilter, setSelectedStationFilter] = useState("All");
+  const [selectedStatusFilter, setSelectedStatusFilter] = useState<"all" | "present" | "break" | "absent">("all");
 
   const [sarCandidates, setSarCandidates] = useState<SarCandidate[]>([
     {
@@ -84,7 +85,7 @@ export function SarHajjApp() {
   };
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden bg-zinc-950 text-xs">
+    <div className="flex-1 min-h-0 flex flex-col overflow-hidden bg-zinc-950 text-xs">
       {/* App Bar & Role Switcher */}
       <div className="p-3 bg-zinc-900/95 border-b border-zinc-800 space-y-2 shrink-0">
         <div className="flex items-center justify-between">
@@ -112,8 +113,9 @@ export function SarHajjApp() {
         {/* Role Switcher Tabs (Admin vs Candidate) */}
         <div className="grid grid-cols-2 p-1 rounded-xl bg-zinc-950 border border-zinc-800 text-[10px] gap-1 font-semibold">
           <button
+            type="button"
             onClick={() => setSarRole("admin")}
-            className={`py-1.5 rounded-lg flex items-center justify-center gap-1.5 transition ${
+            className={`py-2 min-h-[34px] cursor-pointer touch-manipulation rounded-lg flex items-center justify-center gap-1.5 transition active:scale-95 ${
               sarRole === "admin"
                 ? "bg-emerald-600 text-white shadow-sm font-bold"
                 : "text-zinc-400 hover:text-zinc-200"
@@ -124,8 +126,9 @@ export function SarHajjApp() {
           </button>
 
           <button
+            type="button"
             onClick={() => setSarRole("candidate")}
-            className={`py-1.5 rounded-lg flex items-center justify-center gap-1.5 transition ${
+            className={`py-2 min-h-[34px] cursor-pointer touch-manipulation rounded-lg flex items-center justify-center gap-1.5 transition active:scale-95 ${
               sarRole === "candidate"
                 ? "bg-emerald-600 text-white shadow-sm font-bold"
                 : "text-zinc-400 hover:text-zinc-200"
@@ -138,38 +141,70 @@ export function SarHajjApp() {
       </div>
 
       {/* Scrollable Screen Content */}
-      <div className="flex-1 overflow-y-auto p-3 space-y-3">
+      <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-3 space-y-3">
         {/* -------------------------------------------------------------
             SCREEN 1: ADMIN ATTENDANCE PORTAL
             ------------------------------------------------------------- */}
         {sarRole === "admin" && (
           <div className="space-y-3 animate-fade-in">
-            {/* Attendance Metric Counters */}
+            {/* Attendance Metric Counters - Interactive Filter Tabs */}
             <div className="grid grid-cols-4 gap-1.5 text-center">
-              <div className="p-2 rounded-xl bg-zinc-900 border border-zinc-800">
+              <button
+                type="button"
+                onClick={() => setSelectedStatusFilter("all")}
+                className={`p-2 rounded-xl border transition cursor-pointer active:scale-95 ${
+                  selectedStatusFilter === "all"
+                    ? "bg-zinc-800 border-zinc-600 ring-1 ring-zinc-500 shadow-sm"
+                    : "bg-zinc-900 border-zinc-800 hover:bg-zinc-800/60"
+                }`}
+              >
                 <div className="text-[9px] text-zinc-400">Total</div>
                 <div className="font-mono font-bold text-white text-xs mt-0.5">
                   {sarCandidates.length}
                 </div>
-              </div>
-              <div className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30">
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedStatusFilter("present")}
+                className={`p-2 rounded-xl border transition cursor-pointer active:scale-95 ${
+                  selectedStatusFilter === "present"
+                    ? "bg-emerald-500/25 border-emerald-400 ring-1 ring-emerald-400 shadow-sm"
+                    : "bg-emerald-500/10 border-emerald-500/30 hover:bg-emerald-500/20"
+                }`}
+              >
                 <div className="text-[9px] text-emerald-400 font-semibold">Present</div>
                 <div className="font-mono font-bold text-emerald-300 text-xs mt-0.5">
                   {sarCandidates.filter((c) => c.status === "present").length}
                 </div>
-              </div>
-              <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/30">
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedStatusFilter("break")}
+                className={`p-2 rounded-xl border transition cursor-pointer active:scale-95 ${
+                  selectedStatusFilter === "break"
+                    ? "bg-amber-500/25 border-amber-400 ring-1 ring-amber-400 shadow-sm"
+                    : "bg-amber-500/10 border-amber-500/30 hover:bg-amber-500/20"
+                }`}
+              >
                 <div className="text-[9px] text-amber-400 font-semibold">Break</div>
                 <div className="font-mono font-bold text-amber-300 text-xs mt-0.5">
                   {sarCandidates.filter((c) => c.status === "break").length}
                 </div>
-              </div>
-              <div className="p-2 rounded-xl bg-red-500/10 border border-red-500/30">
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedStatusFilter("absent")}
+                className={`p-2 rounded-xl border transition cursor-pointer active:scale-95 ${
+                  selectedStatusFilter === "absent"
+                    ? "bg-red-500/25 border-red-400 ring-1 ring-red-400 shadow-sm"
+                    : "bg-red-500/10 border-red-500/30 hover:bg-red-500/20"
+                }`}
+              >
                 <div className="text-[9px] text-red-400 font-semibold">Absent</div>
                 <div className="font-mono font-bold text-red-300 text-xs mt-0.5">
                   {sarCandidates.filter((c) => c.status === "absent").length}
                 </div>
-              </div>
+              </button>
             </div>
 
             {/* Common Metadata Strip */}
@@ -215,8 +250,9 @@ export function SarHajjApp() {
               {sarCandidates
                 .filter(
                   (c) =>
-                    selectedStationFilter === "All" ||
-                    c.station.toLowerCase().includes(selectedStationFilter.toLowerCase())
+                    (selectedStationFilter === "All" ||
+                      c.station.toLowerCase().includes(selectedStationFilter.toLowerCase())) &&
+                    (selectedStatusFilter === "all" || c.status === selectedStatusFilter)
                 )
                 .map((candidate) => (
                   <div

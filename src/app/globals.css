@@ -382,3 +382,98 @@ svg {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ----------------------------------------------------------------
+   THIRD-PARTY EXTENSION SUPPRESSION & SPACE NEUTRALIZATION
+   Suppresses unwanted unstyled DOM injections from job/copilot extensions
+   (e.g., Careerflow, Career Copilot, Huntr, Teal, etc.)
+   ---------------------------------------------------------------- */
+html,
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #09090b !important;
+  color: #f4f4f5 !important;
+  overflow-x: hidden !important;
+}
+
+html,
+body {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+#app-root {
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* Annihilate ANY element rendered outside #app-root in body or injected by extensions */
+body > *:not(#app-root):not(script):not(style):not(next-route-announcer):not([data-nextjs-scroll-focus-boundary]),
+#app-root ~ *,
+careerflow-extension,
+cf-extension,
+#careerflow-root,
+#careerflow-sidebar,
+div[id*="careerflow" i],
+div[class*="careerflow" i],
+[id*="copilot" i],
+[class*="copilot" i],
+[id*="job-tracker" i],
+[class*="job-tracker" i],
+[id*="jobtracker" i],
+[class*="jobtracker" i],
+div[id*="iAmYourCareerCopilot" i],
+div[class*="iAmYourCareerCopilot" i],
+div[id*="SaveJobtoTracker" i],
+div[id*="ViewJobTracker" i],
+div[id*="AICoverLetterGenerator" i],
+img[alt*="Careerflow" i],
+img[src*="careerflow" i],
+img[alt*="hello" i] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: fixed !important;
+  top: -99999px !important;
+  left: -99999px !important;
+  width: 0 !important;
+  height: 0 !important;
+  max-width: 0 !important;
+  max-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  overflow: hidden !important;
+  z-index: -99999 !important;
+}
+
+/* ----------------------------------------------------------------
+   CLEAN COVER LETTER & CV PRINT / PDF EXPORT STYLES
+   ---------------------------------------------------------------- */
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+  #cover-letter-printable,
+  #cover-letter-printable *,
+  #cv-printable,
+  #cv-printable * {
+    visibility: visible !important;
+  }
+  #cover-letter-printable,
+  #cv-printable {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    color: #111827 !important;
+    background: #ffffff !important;
+    padding: 32px !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+}

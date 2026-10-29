@@ -1,46 +1,15 @@
-"use client";
+import React from "react";
+import { getPortfolioData } from "@/lib/portfolioService";
+import { PortfolioHome } from "@/components/PortfolioHome";
 
-import React, { useState } from "react";
-import { Navbar } from "@/components/Navbar";
-import { HeroSection } from "@/components/HeroSection";
-import { ImpactMetrics } from "@/components/ImpactMetrics";
-import { ArchitectureSection } from "@/components/ArchitectureSection";
-import { ProjectsSection } from "@/components/ProjectsSection";
-import { ExperienceSection } from "@/components/ExperienceSection";
-import { SkillsSection } from "@/components/SkillsSection";
-import { EducationSection } from "@/components/EducationSection";
-import { ContactSection } from "@/components/ContactSection";
-import { Footer } from "@/components/Footer";
-import { CoverLetterModal } from "@/components/CoverLetterModal";
+export const dynamic = "force-dynamic";
 
-export default function Home() {
-  const [isCoverLetterOpen, setIsCoverLetterOpen] = useState(false);
-
-  return (
-    <div className="min-h-screen flex flex-col bg-zinc-950 text-zinc-100">
-      {/* Top Navigation */}
-      <Navbar onOpenCoverLetter={() => setIsCoverLetterOpen(true)} />
-
-      {/* Main Content Sections */}
-      <main className="flex-1">
-        <HeroSection onOpenCoverLetter={() => setIsCoverLetterOpen(true)} />
-        <ImpactMetrics />
-        <ArchitectureSection />
-        <ProjectsSection />
-        <ExperienceSection />
-        <SkillsSection />
-        <EducationSection />
-        <ContactSection onOpenCoverLetter={() => setIsCoverLetterOpen(true)} />
-      </main>
-
-      {/* Footer */}
-      <Footer onOpenCoverLetter={() => setIsCoverLetterOpen(true)} />
-
-      {/* Interactive Cover Letter Dialog */}
-      <CoverLetterModal
-        isOpen={isCoverLetterOpen}
-        onClose={() => setIsCoverLetterOpen(false)}
-      />
-    </div>
-  );
+export default async function Home() {
+  try {
+    const data = await getPortfolioData();
+    return <PortfolioHome initialData={data} />;
+  } catch (error) {
+    // If SSR direct read is pending or in edge warmup, client boundary fetches from /api/content
+    return <PortfolioHome />;
+  }
 }

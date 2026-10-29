@@ -85,7 +85,7 @@ export function ToolboxApp() {
   }, [autoScrollToolbox, activeToolModal]);
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden bg-zinc-950 text-xs">
+    <div className="flex-1 min-h-0 flex flex-col overflow-hidden bg-zinc-950 text-xs">
       {/* Toolbox Header Strip */}
       <div className="p-3 bg-zinc-900/90 border-b border-zinc-800 flex items-center justify-between shrink-0">
         <div>
@@ -150,7 +150,7 @@ export function ToolboxApp() {
 
       {/* Interactive Tool Modal View */}
       {activeToolModal ? (
-        <div className="flex-1 overflow-y-auto p-3 space-y-3 bg-gradient-to-b from-zinc-900 to-black animate-fade-in">
+        <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-3 space-y-3 bg-gradient-to-b from-zinc-900 to-black animate-fade-in">
           <div className="flex items-center justify-between pb-2 border-b border-zinc-800">
             <button
               onClick={() => setActiveToolModal(null)}
@@ -1223,7 +1223,13 @@ export function ToolboxApp() {
         /* Auto-scrolling Tiles Grid for all tools */
         <div
           ref={toolboxScrollRef}
-          className="flex-1 overflow-y-auto p-3 space-y-2 bg-gradient-to-b from-zinc-900/60 to-black select-none"
+          onWheel={() => {
+            if (autoScrollToolbox) setAutoScrollToolbox(false);
+          }}
+          onTouchStart={() => {
+            if (autoScrollToolbox) setAutoScrollToolbox(false);
+          }}
+          className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-3 space-y-2 bg-gradient-to-b from-zinc-900/60 to-black select-none"
         >
           {/* Grid of 36 Tools */}
           <div className="grid grid-cols-2 gap-2">

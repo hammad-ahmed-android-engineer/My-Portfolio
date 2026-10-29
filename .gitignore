@@ -1,12 +1,13 @@
 # ==============================================================================
-# Git Ignore Configuration for Hammad Ahmed Portfolio Web Application
+# Git Ignore Configuration — Hammad Ahmed Portfolio & Admin Panel
 # ==============================================================================
 
 # ------------------------------------------------------------------------------
-# Dependencies
+# Dependencies & Package Managers
 # ------------------------------------------------------------------------------
 node_modules/
 /node_modules
+.pnpm-store/
 /.pnp
 .pnp.*
 .yarn/*
@@ -16,7 +17,7 @@ node_modules/
 !.yarn/versions
 
 # ------------------------------------------------------------------------------
-# Next.js Build Outputs & Caches
+# Next.js, Turbopack & Build Outputs
 # ------------------------------------------------------------------------------
 .next/
 /.next/
@@ -27,31 +28,34 @@ build/
 dist/
 /dist/
 .turbo/
+.swc/
+.cache/
+.eslintcache
 
 # ------------------------------------------------------------------------------
-# TypeScript Caches
+# TypeScript Caches & Generated Declarations
 # ------------------------------------------------------------------------------
 *.tsbuildinfo
 next-env.d.ts
 
 # ------------------------------------------------------------------------------
-# Environment Variables & Confidential Credentials
+# Environment Variables & Secrets (OWASP Security Protection)
 # ------------------------------------------------------------------------------
 .env
-.env*.local
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*
+!.env.example
+!.env.sample
 *.pem
 *.key
 *.cert
 *.crt
 *.pfx
 *.p12
+*.jks
+*.keystore
 
 # ------------------------------------------------------------------------------
-# Debug Logs & Diagnostic Reports
+# Debug Logs, Crash Dumps & Diagnostic Reports
 # ------------------------------------------------------------------------------
 logs/
 *.log
@@ -60,28 +64,46 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # ------------------------------------------------------------------------------
-# Testing & Code Coverage
+# Testing, Playwright, Cypress & Code Coverage
 # ------------------------------------------------------------------------------
 coverage/
 /coverage/
 .nyc_output/
 *.lcov
+test-results/
+playwright-report/
+playwright/.cache/
+cypress/videos/
+cypress/screenshots/
 
 # ------------------------------------------------------------------------------
-# IDE & Code Editor Artifacts
+# Cloud Deployment, Serverless & Edge Adapters
 # ------------------------------------------------------------------------------
-# Visual Studio Code
+.vercel/
+.netlify/
+.serverless/
+.open-next/
+.wrangler/
+
+# ------------------------------------------------------------------------------
+# IDE, Code Editors & AI Coding Assistants
+# ------------------------------------------------------------------------------
+# Visual Studio Code / Cursor / Windsurf / Antigravity
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 *.code-workspace
+.history/
 
 # JetBrains / Android Studio / IntelliJ IDEA / WebStorm
 .idea/
 *.iml
 *.iws
 *.ipr
+out/
 
 # Sublime Text / Eclipse / NetBeans
 *.sublime-project
@@ -90,15 +112,35 @@ coverage/
 .classpath
 .settings/
 
-# Vim / Emacs swap and backup files
+# Vim / Neovim / Emacs swap and backup files
 *.swp
 *.swo
+*.swn
 *~
 .#*
+
+# AI Assistant Local Caches & Scratchpads
+.gemini/
+.antigravity/
+.cursor/
+.windsurf/
+.claude/
+.aider*
+AGENTS.md
 
 # ------------------------------------------------------------------------------
 # Operating System Generated Files
 # ------------------------------------------------------------------------------
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.stackdump
+*.lnk
+
 # macOS
 .DS_Store
 .DS_Store?
@@ -108,34 +150,20 @@ coverage/
 .AppleDouble
 .LSOverride
 
-# Windows
-Thumbs.db
-Thumbs.db:encryptable
-ehthumbs.db
-ehthumbs_vista.db
-[Dd]esktop.ini
-$RECYCLE.BIN/
-*.stackdump
-
 # Linux
 .directory
 .fuse_hidden*
+.Trash-*
 
 # ------------------------------------------------------------------------------
-# Hosting & Cloud Deployment Caches
-# ------------------------------------------------------------------------------
-.vercel
-.netlify
-.serverless
-
-# ------------------------------------------------------------------------------
-# Temporary Files & AI Agent Workspace Artifacts
+# Temporary & Backup Files
 # ------------------------------------------------------------------------------
 *.tmp
 *.temp
+*.bak
+*.orig
 temp/
 tmp/
 .temp/
 .tmp/
-.gemini/
-.antigravity/
+/profilePic.jpg

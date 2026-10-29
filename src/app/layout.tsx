@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ThemeContext";
+import { ThemeProvider } from "@/components/providers/ThemeContext";
+import { ExtensionShield } from "@/components/common/ExtensionShield";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,48 +15,70 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://hammad-ahmed-android-engineer.vercel.app";
+
 export const metadata: Metadata = {
   title: "Hammad Ahmed | Senior Android Engineer & Senior Android Developer",
   description:
-    "Official portfolio of Hammad Ahmed, Senior Android Engineer specializing in native Android engineering, Kotlin, Jetpack Compose, Clean Architecture, Coroutines, Flow, and high performance offline first mobile systems.",
+    "Official portfolio of Hammad Ahmed, Senior Android Engineer specializing in native Android engineering, Kotlin, Jetpack Compose, Clean Architecture, Coroutines, Flow, Room, and high-performance offline-first mobile systems.",
   keywords: [
     "Hammad Ahmed",
-    "Android Developer",
-    "Android Engineer",
-    "Senior Android Developer",
     "Senior Android Engineer",
+    "Senior Android Developer",
+    "Lead Android Engineer",
+    "Android Architect",
+    "Android Software Engineer",
     "Kotlin",
+    "Kotlin Coroutines",
+    "Kotlin Flow",
+    "StateFlow",
+    "SharedFlow",
     "Jetpack Compose",
+    "Compose Multiplatform",
+    "Material Design 3",
     "Android SDK",
     "Android Studio",
-    "Clean Architecture",
+    "Android 15",
+    "Android 14",
+    "Target SDK 35",
+    "Clean Architecture Android",
     "MVVM",
-    "MVI",
-    "Coroutines",
-    "Flow",
-    "StateFlow",
+    "MVI Pattern",
+    "Unidirectional Data Flow",
+    "Feature Modularization",
+    "Multi-Module Architecture",
     "Dagger Hilt",
-    "Koin",
+    "Koin DI",
     "Dependency Injection",
     "Room Database",
     "Offline First Architecture",
     "WorkManager",
     "Foreground Services",
     "Broadcast Receivers",
-    "Material Design 3",
-    "Android Jetpack",
-    "Architecture Components",
-    "Retrofit",
-    "OkHttp",
+    "Retrofit 2",
+    "OkHttp 4",
     "REST APIs",
+    "Checkout.com Flow SDK",
+    "Tap Payments SDK",
+    "Payment Gateway Integration",
     "Performance Profiling",
+    "Android Profiler",
+    "ANR Elimination",
+    "Cold Start Optimization",
+    "LeakCanary",
     "Memory Management",
     "Baseline Profiles",
-    "R8 Optimization",
-    "Gradle Build Optimization",
-    "Unit Testing",
+    "R8 Shrinking",
+    "ProGuard Rules",
+    "JUnit 5",
+    "MockK",
+    "Turbine Flow Testing",
+    "Firebase Crashlytics",
+    "Firebase Cloud Messaging",
+    "CameraX API",
     "Mobile Software Engineering",
     "Native Android App Development",
+    "Google Play Console",
   ],
   authors: [{ name: "Hammad Ahmed" }],
   creator: "Hammad Ahmed",
@@ -65,7 +88,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://hammad-ahmed.github.io"),
+  metadataBase: new URL(siteUrl),
   alternates: {
     canonical: "/",
   },
@@ -76,7 +99,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Hammad Ahmed | Android Engineering Portfolio",
-    url: "/",
+    url: siteUrl,
   },
   twitter: {
     card: "summary_large_image",
@@ -98,29 +121,69 @@ export const metadata: Metadata = {
   category: "technology",
 };
 
-const personSchema = {
+const structuredDataGraph = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Hammad Ahmed",
-  jobTitle: "Senior Android Engineer",
-  alternateName: [
-    "Senior Android Developer",
-    "Android Engineer",
-    "Android Developer",
-  ],
-  description:
-    "Senior Android Engineer specializing in native Android engineering, Kotlin, Jetpack Compose, Clean Architecture, Coroutines, Flow, and high performance mobile systems.",
-  knowsAbout: [
-    "Android Development",
-    "Kotlin",
-    "Jetpack Compose",
-    "Clean Architecture",
-    "Coroutines",
-    "StateFlow",
-    "Dagger Hilt",
-    "Room Database",
-    "Offline First Architecture",
-    "Mobile Software Engineering",
+  "@graph": [
+    {
+      "@type": "ProfilePage",
+      "@id": `${siteUrl}/#profilepage`,
+      url: siteUrl,
+      name: "Hammad Ahmed — Senior Android Engineer Portfolio",
+      isPartOf: {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        url: siteUrl,
+        name: "Hammad Ahmed Portfolio",
+      },
+    },
+    {
+      "@type": "Person",
+      "@id": `${siteUrl}/#person`,
+      name: "Hammad Ahmed",
+      jobTitle: "Senior Android Engineer",
+      alternateName: [
+        "Senior Android Developer",
+        "Android Software Engineer",
+        "Mobile Software Architect",
+      ],
+      description:
+        "Senior Android Engineer with 5+ years of production experience building high-scale native Android apps, Jetpack Compose interfaces, offline-first Room architectures, and secure payment integrations with 99.99% crash-free stability.",
+      url: siteUrl,
+      sameAs: [
+        "https://www.linkedin.com/in/hammad-ahmed-android-engineer",
+        "https://github.com/hammad-ahmed-android-engineer",
+      ],
+      alumniOf: [
+        {
+          "@type": "CollegeOrUniversity",
+          name: "National University of Sciences and Technology (NUST)",
+        },
+        {
+          "@type": "CollegeOrUniversity",
+          name: "COMSATS University Islamabad",
+        },
+      ],
+      knowsAbout: [
+        "Android Development",
+        "Kotlin",
+        "Jetpack Compose",
+        "Clean Architecture",
+        "Kotlin Coroutines & Flow",
+        "StateFlow",
+        "Dagger Hilt",
+        "Room Database",
+        "Offline-First Architecture",
+        "WorkManager",
+        "Retrofit & OkHttp",
+        "Checkout.com Flow SDK",
+        "Tap Payments SDK",
+        "ANR Elimination",
+        "Cold Start Optimization",
+        "Android Profiler",
+        "JUnit & MockK Testing",
+        "Material Design 3",
+      ],
+    },
   ],
 };
 
@@ -132,54 +195,26 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`dark ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
         <script
-          dangerouslySetInnerHTML={{
-            __html: `
-        (function () {
-          var allowed = { lang: true, dir: true, class: true, style: true };
-
-          function clean(el) {
-            if (!el) return;
-            for (var i = el.attributes.length - 1; i >= 0; i--) {
-              var name = el.attributes[i].name;
-              if (!allowed[name]) el.removeAttribute(name);
-            }
-          }
-
-          function cleanAll() {
-            clean(document.documentElement);
-            clean(document.body);
-          }
-
-          cleanAll();
-
-          // Extensions can add attributes after this script runs, so watch for changes
-          var observer = new MutationObserver(cleanAll);
-          observer.observe(document.documentElement, { attributes: true });
-
-          document.addEventListener("DOMContentLoaded", function () {
-            cleanAll();
-            if (document.body) {
-              observer.observe(document.body, { attributes: true });
-            }
-          });
-        })();
-      `,
-          }}
-        />
-        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(personSchema).replace(/</g, "\\u003c"),
+            __html: JSON.stringify(structuredDataGraph).replace(/</g, "\\u003c"),
           }}
         />
       </head>
 
-      <body className="flex min-h-full flex-col bg-zinc-950 font-sans text-zinc-100">
-        <ThemeProvider>{children}</ThemeProvider>
+      <body
+        suppressHydrationWarning
+        className="flex min-h-full flex-col bg-zinc-950 font-sans text-zinc-100"
+      >
+        <ExtensionShield />
+        <div id="app-root" className="flex min-h-full flex-col flex-1">
+          <ThemeProvider>{children}</ThemeProvider>
+        </div>
       </body>
     </html>
   );

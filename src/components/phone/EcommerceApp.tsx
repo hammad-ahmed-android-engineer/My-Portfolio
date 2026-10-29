@@ -22,9 +22,6 @@ import {
   User,
   Home,
   Receipt,
-  Play,
-  Pause,
-  RotateCcw,
   Sparkles,
   Clock,
   Layers,
@@ -440,8 +437,6 @@ export function EcommerceApp() {
 
   // Core navigation state
   const [ecomStep, setEcomStep] = useState<EcommerceStep>("branch");
-  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
-  const [playbackSpeed, setPlaybackSpeed] = useState<1 | 1.5 | 2>(1);
   const [fulfillmentMode, setFulfillmentMode] = useState<"delivery" | "pickup">("delivery");
 
   // Selection states
@@ -508,88 +503,6 @@ export function EcommerceApp() {
     setCouponApplied(true);
   };
 
-  // Automated "Video" Walkthrough Playback
-  useEffect(() => {
-    if (!isVideoPlaying) return;
-
-    const stepsSequence: EcommerceStep[] = [
-      "branch",
-      "dashboard",
-      "category_items",
-      "item_details",
-      "cart",
-      "checkout",
-      "order_details",
-    ];
-
-    const baseDuration = 3800;
-    const intervalMs = baseDuration / playbackSpeed;
-
-    const timer = setInterval(() => {
-      setEcomStep((currentStep) => {
-        const currentIndex = stepsSequence.indexOf(currentStep);
-        if (currentIndex < stepsSequence.length - 1) {
-          const nextStep = stepsSequence[currentIndex + 1];
-          if (nextStep === "cart") setActiveBottomTab("cart");
-          else if (nextStep === "checkout" || nextStep === "order_details") setActiveBottomTab("orders");
-          else setActiveBottomTab("home");
-          return nextStep;
-        } else {
-          setActiveBottomTab("home");
-          return "branch";
-        }
-      });
-    }, intervalMs);
-
-    return () => clearInterval(timer);
-  }, [isVideoPlaying, playbackSpeed]);
-
-  const getStepNumber = (s: EcommerceStep) => {
-    switch (s) {
-      case "branch":
-        return 1;
-      case "dashboard":
-        return 2;
-      case "category_items":
-        return 3;
-      case "item_details":
-        return 4;
-      case "cart":
-        return 5;
-      case "checkout":
-        return 6;
-      case "order_details":
-        return 7;
-      case "rewards":
-        return 6;
-      case "profile":
-        return 7;
-    }
-  };
-
-  const getStepTitle = (s: EcommerceStep) => {
-    switch (s) {
-      case "branch":
-        return "1. Branch & Fulfillment";
-      case "dashboard":
-        return "2. Menu Dashboard";
-      case "category_items":
-        return "3. Category List";
-      case "item_details":
-        return "4. Modifiers & Options";
-      case "cart":
-        return "5. Cart Quantity";
-      case "checkout":
-        return "6. Checkout & Loyalty";
-      case "order_details":
-        return "7. Live GPS Tracking";
-      case "rewards":
-        return "VIP Loyalty Club";
-      case "profile":
-        return "User Profile";
-    }
-  };
-
   // Totals calculations
   const cartSubtotal = cartItems.reduce((acc, it) => acc + it.unitPrice * it.qty, 0);
   const couponDiscount = couponApplied ? cartSubtotal * 0.2 : 0;
@@ -611,134 +524,48 @@ export function EcommerceApp() {
   };
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden bg-zinc-950 text-xs select-none">
+    <div className="flex-1 min-h-0 flex flex-col overflow-hidden bg-zinc-950 text-xs select-none">
       {/* =====================================================================
           TOP CONTROLLER & MULTI-TENANT SAAS BAR
           ===================================================================== */}
-      <div className="bg-zinc-900/95 border-b border-zinc-800 px-3 pt-2 pb-2 shrink-0 space-y-2">
-        {/* 7-Segment Story / Video Reel Progress Bar */}
-        <div className="grid grid-cols-7 gap-1 w-full">
-          {[
-            "branch",
-            "dashboard",
-            "category_items",
-            "item_details",
-            "cart",
-            "checkout",
-            "order_details",
-          ].map((step, idx) => {
-            const currentIdx = getStepNumber(ecomStep) - 1;
-            const isPassed = idx < currentIdx;
-            const isCurrent = idx === currentIdx;
-            return (
-              <button
-                key={step}
-                onClick={() => {
-                  setEcomStep(step as EcommerceStep);
-                  if (step === "cart") setActiveBottomTab("cart");
-                  else if (step === "checkout" || step === "order_details") setActiveBottomTab("orders");
-                  else setActiveBottomTab("home");
-                }}
-                className="h-1 rounded-full overflow-hidden bg-zinc-800 relative cursor-pointer group"
-                title={`Jump to step ${idx + 1}`}
-              >
-                <div
-                  className={`h-full transition-all duration-300 ${
-                    isPassed
-                      ? "bg-emerald-400 w-full"
-                      : isCurrent
-                      ? "bg-emerald-400 w-full animate-pulse"
-                      : "w-0"
-                  }`}
-                />
-              </button>
-            );
-          })}
+      <div className="bg-zinc-900/95 border-b border-zinc-800 px-3 py-2 shrink-0 space-y-1.5">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-1.5">
+            <span className="text-base">{currentTenant.icon}</span>
+            <div>
+              <div className="font-bold text-xs text-white leading-tight">{currentTenant.name}</div>
+              <div className="text-[9px] text-zinc-400 font-mono">SaaS Tenant {activeTenantIdx + 1} of 5</div>
+            </div>
+          </div>
+          <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">
+            5 SaaS Suite
+          </span>
         </div>
 
-        {/* Video Reel Header Controls */}
-        <div className="flex items-center justify-between text-[10px]">
-          <div className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-            <span className="font-mono font-bold text-emerald-400">
-              {getStepTitle(ecomStep)}
-            </span>
-          </div>
-
-          <div className="flex items-center gap-1">
-            {/* Speed Toggle */}
+        {/* 5-Tenant Selector Pills */}
+        <div className="flex gap-1 overflow-x-auto no-scrollbar py-0.5">
+          {SAAS_TENANTS.map((t, idx) => (
             <button
-              onClick={() => {
-                if (playbackSpeed === 1) setPlaybackSpeed(1.5);
-                else if (playbackSpeed === 1.5) setPlaybackSpeed(2);
-                else setPlaybackSpeed(1);
-              }}
-              className="px-1.5 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-mono text-[9px] border border-zinc-700"
-              title="Playback Speed"
+              key={t.id}
+              type="button"
+              onClick={() => handleTenantChange(idx)}
+              className={`shrink-0 px-2 py-1 rounded-lg text-[9px] font-semibold transition flex items-center gap-1 cursor-pointer touch-manipulation ${
+                activeTenantIdx === idx
+                  ? "bg-emerald-600 text-white shadow-sm font-bold"
+                  : "bg-zinc-950 text-zinc-400 border border-zinc-800 hover:text-zinc-200"
+              }`}
             >
-              {playbackSpeed}x
+              <span>{t.icon}</span>
+              <span>{t.name.split(" ")[0]}</span>
             </button>
-
-            {/* Play / Pause Toggle */}
-            <button
-              onClick={() => setIsVideoPlaying(!isVideoPlaying)}
-              className="px-1.5 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 flex items-center gap-1 font-mono text-[9px] transition border border-zinc-700"
-              title={isVideoPlaying ? "Pause Video Walkthrough" : "Play Video Walkthrough"}
-            >
-              {isVideoPlaying ? (
-                <Pause className="w-2.5 h-2.5 text-amber-400" />
-              ) : (
-                <Play className="w-2.5 h-2.5 text-emerald-400" />
-              )}
-              <span>{isVideoPlaying ? "Pause" : "Play"}</span>
-            </button>
-
-            {/* Next Step */}
-            <button
-              onClick={() => {
-                const seq: EcommerceStep[] = [
-                  "branch",
-                  "dashboard",
-                  "category_items",
-                  "item_details",
-                  "cart",
-                  "checkout",
-                  "order_details",
-                ];
-                const curIdx = seq.indexOf(ecomStep);
-                const nxt = seq[(curIdx + 1) % seq.length];
-                setEcomStep(nxt);
-                if (nxt === "cart") setActiveBottomTab("cart");
-                else if (nxt === "checkout" || nxt === "order_details") setActiveBottomTab("orders");
-                else setActiveBottomTab("home");
-              }}
-              className="px-1.5 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-[9px] font-mono flex items-center gap-0.5 border border-zinc-700"
-              title="Skip to Next Step"
-            >
-              <span>Skip</span>
-              <ChevronRight className="w-2.5 h-2.5" />
-            </button>
-
-            {/* Restart */}
-            <button
-              onClick={() => {
-                setEcomStep("branch");
-                setIsVideoPlaying(true);
-                setActiveBottomTab("home");
-              }}
-              className="p-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-400 transition border border-zinc-700"
-              title="Restart Video Demo"
-            >
-              <RotateCcw className="w-2.5 h-2.5" />
-            </button>
-          </div>
+          ))}
         </div>
       </div>
 
       {/* =====================================================================
           SCROLLABLE PHONE BODY CONTENT
           ===================================================================== */}
-      <div className="flex-1 overflow-y-auto p-3 space-y-3">
+      <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-3 space-y-3">
         {/* -------------------------------------------------------------
             STAGE 1: BRANCH & FULFILLMENT SELECTION
             ------------------------------------------------------------- */}
@@ -1243,7 +1070,7 @@ export function EcommerceApp() {
             {/* Cart Items List */}
             <div className="space-y-2">
               {cartItems.map((cItem, idx) => (
-                <div key={cItem.id || idx} className="p-3 rounded-2xl bg-zinc-900 border border-zinc-800 space-y-2">
+                <div key={cItem.id ?? idx} className="p-3 rounded-2xl bg-zinc-900 border border-zinc-800 space-y-2">
                   <div className="flex justify-between items-start">
                     <div>
                       <div className="font-bold text-white text-xs">{cItem.name}</div>
@@ -1704,28 +1531,28 @@ export function EcommerceApp() {
               </div>
             </div>
 
-            {/* Restart Walkthrough CTA */}
+            {/* Order Next Actions */}
             <div className="pt-1 flex gap-2">
               <button
-                onClick={() => {
-                  setEcomStep("branch");
-                  setIsVideoPlaying(true);
-                  setActiveBottomTab("home");
-                }}
-                className="flex-1 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition border border-zinc-700"
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-                <span>Replay Walkthrough</span>
-              </button>
-
-              <button
+                type="button"
                 onClick={() => {
                   setEcomStep("dashboard");
                   setActiveBottomTab("home");
                 }}
-                className="py-2.5 px-4 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs font-semibold hover:border-zinc-700 transition"
+                className="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-sm"
               >
-                Menu
+                <span>Order More Items</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setEcomStep("branch");
+                  setActiveBottomTab("home");
+                }}
+                className="py-2.5 px-3.5 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs font-semibold hover:border-zinc-700 transition"
+              >
+                Change Branch
               </button>
             </div>
           </div>
@@ -1849,11 +1676,12 @@ export function EcommerceApp() {
           ===================================================================== */}
       <div className="h-12 bg-zinc-900/95 border-t border-zinc-800 px-3 flex items-center justify-between text-[9px] font-medium shrink-0">
         <button
+          type="button"
           onClick={() => {
             setActiveBottomTab("home");
             setEcomStep("dashboard");
           }}
-          className={`flex flex-col items-center gap-0.5 transition ${
+          className={`flex flex-col items-center gap-0.5 transition cursor-pointer touch-manipulation py-1 ${
             activeBottomTab === "home" ? "text-emerald-400 font-bold" : "text-zinc-500 hover:text-zinc-300"
           }`}
         >
@@ -1862,11 +1690,12 @@ export function EcommerceApp() {
         </button>
 
         <button
+          type="button"
           onClick={() => {
             setActiveBottomTab("rewards");
             setEcomStep("rewards");
           }}
-          className={`flex flex-col items-center gap-0.5 transition ${
+          className={`flex flex-col items-center gap-0.5 transition cursor-pointer touch-manipulation py-1 ${
             activeBottomTab === "rewards" ? "text-emerald-400 font-bold" : "text-zinc-500 hover:text-zinc-300"
           }`}
         >
@@ -1875,11 +1704,12 @@ export function EcommerceApp() {
         </button>
 
         <button
+          type="button"
           onClick={() => {
             setActiveBottomTab("cart");
             setEcomStep("cart");
           }}
-          className={`flex flex-col items-center gap-0.5 transition relative ${
+          className={`flex flex-col items-center gap-0.5 transition relative cursor-pointer touch-manipulation py-1 ${
             activeBottomTab === "cart" ? "text-emerald-400 font-bold" : "text-zinc-500 hover:text-zinc-300"
           }`}
         >
@@ -1893,11 +1723,12 @@ export function EcommerceApp() {
         </button>
 
         <button
+          type="button"
           onClick={() => {
             setActiveBottomTab("orders");
             setEcomStep("order_details");
           }}
-          className={`flex flex-col items-center gap-0.5 transition ${
+          className={`flex flex-col items-center gap-0.5 transition cursor-pointer touch-manipulation py-1 ${
             activeBottomTab === "orders" ? "text-emerald-400 font-bold" : "text-zinc-500 hover:text-zinc-300"
           }`}
         >
@@ -1906,11 +1737,12 @@ export function EcommerceApp() {
         </button>
 
         <button
+          type="button"
           onClick={() => {
             setActiveBottomTab("profile");
             setEcomStep("profile");
           }}
-          className={`flex flex-col items-center gap-0.5 transition ${
+          className={`flex flex-col items-center gap-0.5 transition cursor-pointer touch-manipulation py-1 ${
             activeBottomTab === "profile" ? "text-emerald-400 font-bold" : "text-zinc-500 hover:text-zinc-300"
           }`}
         >
