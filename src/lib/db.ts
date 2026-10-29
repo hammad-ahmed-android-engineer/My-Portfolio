@@ -15,6 +15,7 @@ if (process.env.NODE_ENV !== "production") {
 interface MongooseCache {
   conn: typeof mongoose | null;
   promise: Promise<typeof mongoose> | null;
+  lastError?: string | null;
 }
 
 declare global {
@@ -22,19 +23,26 @@ declare global {
   var mongooseCache: MongooseCache | undefined;
 }
 
-let cached: MongooseCache = global.mongooseCache ?? { conn: null, promise: null };
+let cached: MongooseCache = global.mongooseCache ?? { conn: null, promise: null, lastError: null };
 
 if (!global.mongooseCache) {
   global.mongooseCache = cached;
 }
 
+export function getLastDbError(): string | null {
+  return cached.lastError ?? null;
+}
+
 export async function connectToDatabase(): Promise<typeof mongoose | null> {
-  const mongoUri = process.env.MONGODB_URI || serverConfig.mongoUri;
+  const mongoUri = (process.env.MONGODB_URI || serverConfig.mongoUri || "")
+    .trim()
+    .replace(/^["']|["']$/g, "");
   if (!mongoUri) {
+    cached.lastError = "MONGODB_URI environment variable is empty or not set.";
     return null;
   }
 
-  if (cached.conn) {
+  if (cached.conn && mongoose.connection.readyState === 1) {
     return cached.conn;
   }
 
@@ -42,15 +50,19 @@ export async function connectToDatabase(): Promise<typeof mongoose | null> {
     const opts: mongoose.ConnectOptions = {
       bufferCommands: false,
       maxPoolSize: 10,
-      serverSelectionTimeoutMS: 8000,
+      serverSelectionTimeoutMS: 10000,
       dbName: "portfolio",
     };
 
     cached.promise = (async () => {
       try {
-        return await mongoose.connect(mongoUri, opts);
+        const connection = await mongoose.connect(mongoUri, opts);
+        cached.lastError = null;
+        return connection;
       } catch (err: any) {
         cached.promise = null;
+        cached.conn = null;
+        cached.lastError = err?.message || "MongoDB connection failed";
         console.warn("MongoDB connection attempt failed:", err.message);
         return null as unknown as typeof mongoose;
       }
@@ -60,8 +72,10 @@ export async function connectToDatabase(): Promise<typeof mongoose | null> {
   try {
     cached.conn = await cached.promise;
     return cached.conn;
-  } catch {
+  } catch (err: any) {
     cached.promise = null;
+    cached.conn = null;
+    cached.lastError = err?.message || "MongoDB connection failed";
     return null;
   }
 }

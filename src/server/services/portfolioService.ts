@@ -1,11 +1,17 @@
 import { PortfolioData } from "@/types/portfolio";
 import { portfolioRepository } from "@/server/repositories/portfolioRepository";
+import { getLastDbError } from "@/lib/db";
 
 export class PortfolioService {
   async getPortfolioData(): Promise<PortfolioData> {
     const existing = await portfolioRepository.getSingleton();
     if (!existing) {
-      throw new Error("Portfolio singleton document not found in MongoDB database.");
+      const dbErr = getLastDbError();
+      throw new Error(
+        dbErr
+          ? `MongoDB connection error: ${dbErr}`
+          : "Portfolio document not found in MongoDB 'portfolio' database."
+      );
     }
     return JSON.parse(JSON.stringify(existing));
   }

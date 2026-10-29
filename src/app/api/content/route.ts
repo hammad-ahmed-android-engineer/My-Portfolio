@@ -20,8 +20,10 @@ export async function GET(req: NextRequest) {
     });
   } catch (error: unknown) {
     console.error("Public content retrieval failed:", error);
+    const message =
+      error instanceof Error ? error.message : "Failed to retrieve portfolio content";
     return NextResponse.json(
-      { error: "Failed to retrieve portfolio content" },
+      { error: message },
       { status: 500 }
     );
   }

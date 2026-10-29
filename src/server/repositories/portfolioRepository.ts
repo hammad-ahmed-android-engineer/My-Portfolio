@@ -8,7 +8,9 @@ export class PortfolioRepository {
   async getSingleton(): Promise<IPortfolioDocument | null> {
     const db = await connectToDatabase();
     if (!db) return null;
-    return PortfolioModel.findOne({ singletonId: SINGLETON_ID });
+    const bySingletonId = await PortfolioModel.findOne({ singletonId: SINGLETON_ID });
+    if (bySingletonId) return bySingletonId;
+    return PortfolioModel.findOne({});
   }
 
   async createSingleton(data: PortfolioData): Promise<PortfolioData> {
