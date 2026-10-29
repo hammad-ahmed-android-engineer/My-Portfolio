@@ -5,9 +5,6 @@ function getRequiredEnv(key: string, devFallback: string): string {
   if (value && value.trim().length > 0) {
     return value.trim();
   }
-  if (process.env.NODE_ENV === "production") {
-    throw new Error(`Production configuration error: Missing required environment variable [${key}].`);
-  }
   return devFallback;
 }
 
