@@ -2,13 +2,15 @@ import mongoose from "mongoose";
 import dns from "dns";
 import { serverConfig } from "@/lib/config";
 
-try {
-  dns.setServers(["8.8.8.8", "8.8.4.4", "1.1.1.1"]);
-} catch {
-  // Ignore
+// Only use custom public DNS servers in local Windows development if needed,
+// never override internal container DNS in production serverless environments (Vercel).
+if (process.env.NODE_ENV !== "production") {
+  try {
+    dns.setServers(["8.8.8.8", "8.8.4.4", "1.1.1.1"]);
+  } catch {
+    // Ignore
+  }
 }
-
-const MONGODB_URI = serverConfig.mongoUri;
 
 interface MongooseCache {
   conn: typeof mongoose | null;
@@ -27,7 +29,8 @@ if (!global.mongooseCache) {
 }
 
 export async function connectToDatabase(): Promise<typeof mongoose | null> {
-  if (!MONGODB_URI) {
+  const mongoUri = process.env.MONGODB_URI || serverConfig.mongoUri;
+  if (!mongoUri) {
     return null;
   }
 
@@ -39,16 +42,16 @@ export async function connectToDatabase(): Promise<typeof mongoose | null> {
     const opts: mongoose.ConnectOptions = {
       bufferCommands: false,
       maxPoolSize: 10,
-      serverSelectionTimeoutMS: 5000,
+      serverSelectionTimeoutMS: 8000,
       dbName: "portfolio",
     };
 
     cached.promise = (async () => {
       try {
-        return await mongoose.connect(MONGODB_URI, opts);
+        return await mongoose.connect(mongoUri, opts);
       } catch (err: any) {
         cached.promise = null;
-        console.warn("MongoDB connection attempt failed, continuing in fallback mode:", err.message);
+        console.warn("MongoDB connection attempt failed:", err.message);
         return null as unknown as typeof mongoose;
       }
     })();

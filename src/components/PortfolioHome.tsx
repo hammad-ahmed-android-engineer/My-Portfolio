@@ -36,13 +36,13 @@ export function PortfolioHome({ initialData }: PortfolioHomeProps) {
     let isMounted = true;
     async function loadFromApi() {
       try {
-        const liveData = await apiClient.getPortfolio();
+        const liveData = await apiClient.getPublicPortfolio();
         if (isMounted && liveData) {
           setData(liveData);
           setError(null);
         }
       } catch (err: unknown) {
-        if (isMounted && !data) {
+        if (isMounted && !initialData) {
           const msg = err instanceof Error ? err.message : "Failed to load portfolio from API";
           setError(msg);
         }
@@ -53,19 +53,23 @@ export function PortfolioHome({ initialData }: PortfolioHomeProps) {
       }
     }
 
-    // Always fetch latest data from the API endpoint connected to MongoDB
-    loadFromApi();
+    // Fetch from public /api/content if SSR initialData was not provided
+    if (!initialData) {
+      loadFromApi();
+    } else {
+      setIsLoading(false);
+    }
 
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [initialData]);
 
   if (isLoading && !data) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-950 text-zinc-100">
         <div className="w-10 h-10 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin mb-4" />
-        <p className="text-sm font-medium text-zinc-400">Loading portfolio from API...</p>
+        <p className="text-sm font-medium text-zinc-400">Loading ...</p>
       </div>
     );
   }

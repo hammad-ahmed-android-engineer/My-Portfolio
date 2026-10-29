@@ -49,7 +49,26 @@ export const apiClient = {
   },
 
   /**
-   * Fetch portfolio data (with encrypted browser caching)
+   * Fetch public portfolio data (no authentication required)
+   */
+  async getPublicPortfolio(): Promise<PortfolioData> {
+    const res = await fetch("/api/content", {
+      method: "GET",
+      headers: {
+        "Cache-Control": "no-cache",
+      },
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.error ?? "Failed to fetch portfolio data");
+    }
+
+    return data;
+  },
+
+  /**
+   * Fetch portfolio data for Admin Panel (with encrypted browser caching)
    */
   async getPortfolio(): Promise<PortfolioData> {
     const res = await fetch("/api/portal/content", {
