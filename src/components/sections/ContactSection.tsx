@@ -91,7 +91,8 @@ function FormspreeContactForm({
             placeholder="e.g. Sarah Jenkins"
             autoComplete="name"
             required
-            className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-emerald-500"
+            style={{ cursor: "text", caretColor: "#ffffff" }}
+            className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-sm text-zinc-100 placeholder-zinc-500 cursor-text caret-white focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/30 transition"
           />
         </div>
 
@@ -111,7 +112,8 @@ function FormspreeContactForm({
             onChange={(e) => setCompany(e.target.value)}
             placeholder="e.g. Careem or Tech Corp"
             autoComplete="organization"
-            className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-emerald-500"
+            style={{ cursor: "text", caretColor: "#ffffff" }}
+            className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-sm text-zinc-100 placeholder-zinc-500 cursor-text caret-white focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/30 transition"
           />
         </div>
       </div>
@@ -133,7 +135,8 @@ function FormspreeContactForm({
           placeholder="you@company.com"
           autoComplete="email"
           required
-          className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-emerald-500"
+          style={{ cursor: "text", caretColor: "#ffffff" }}
+          className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-sm text-zinc-100 placeholder-zinc-500 cursor-text caret-white focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/30 transition"
         />
 
         <ValidationError
@@ -160,7 +163,8 @@ function FormspreeContactForm({
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Tell me about the role, project, or collaboration..."
           required
-          className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-emerald-500 resize-none"
+          style={{ cursor: "text", caretColor: "#ffffff" }}
+          className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-sm text-zinc-100 placeholder-zinc-500 cursor-text caret-white focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/30 transition"
         />
 
         <ValidationError
@@ -259,9 +263,7 @@ export function ContactSection({
           </h2>
 
           <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-            Currently interviewing for Senior Android Engineer roles.
-            Available for remote positions with global timezone flexibility
-            (GMT+3 / GMT+5 / EU / US).
+            Open to Senior Android Engineer opportunities worldwide, with remote availability and flexible working hours across global time zones.
           </p>
         </div>
 
@@ -390,9 +392,7 @@ export function ContactSection({
                 </div>
 
                 <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed text-[11px]">
-                  Based in Islamabad (GMT+5). Excellent overlap with Saudi
-                  Arabia / GCC (GMT+3, only 2h diff), UK / Europe (4 to 5h
-                  diff), and flexible for US East early syncs.
+                  Based in Islamabad (UTC+5), with flexible hours for collaboration across GCC, Asia, Europe, and North America.
                 </p>
               </div>
 

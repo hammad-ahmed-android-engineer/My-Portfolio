@@ -23,17 +23,7 @@ export function ItemListInput({
   const handleAddItem = () => {
     const trimmed = inputValue.trim();
     if (!trimmed) return;
-
-    // If user pasted comma-separated or newline-separated text, split it
-    if (trimmed.includes(",") || trimmed.includes("\n")) {
-      const splitItems = trimmed
-        .split(/[,\n]/)
-        .map((s) => s.trim())
-        .filter(Boolean);
-      onChange([...items, ...splitItems]);
-    } else {
-      onChange([...items, trimmed]);
-    }
+    onChange([...items, trimmed]);
     setInputValue("");
   };
 

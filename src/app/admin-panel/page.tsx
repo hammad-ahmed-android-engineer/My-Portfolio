@@ -10,6 +10,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AdminConsolePage() {
+export default function AdminPanelPage() {
   return <AdminDashboard />;
 }

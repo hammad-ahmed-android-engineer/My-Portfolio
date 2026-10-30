@@ -19,7 +19,7 @@ export function AdminLoginForm() {
 
     try {
       await apiClient.login(username, password);
-      router.push("/admin-console");
+      router.push("/admin-panel");
       router.refresh();
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Invalid credentials. Please try again.";

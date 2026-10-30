@@ -16,6 +16,7 @@ import {
   Wrench,
   FileText,
   Download,
+  Loader2,
 } from "lucide-react";
 import { PersonalInfo } from "@/types/portfolio";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
@@ -47,6 +48,28 @@ export function Navbar({ personalInfo, onOpenCoverLetter, onOpenCv }: NavbarProp
   const { activeSection, setActiveSection } = useActiveSection(sectionIds, "overview");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [isDownloadingCv, setIsDownloadingCv] = useState(false);
+
+  const handleNavbarDownloadCv = async () => {
+    if (isDownloadingCv) return;
+    setIsDownloadingCv(true);
+    try {
+      await downloadPdf(
+        info?.resumeDriveLink,
+        () => {
+          if (onOpenCv) {
+            onOpenCv();
+            setTimeout(() => window.print(), 350);
+          } else {
+            window.print();
+          }
+        },
+        "cv"
+      );
+    } finally {
+      setIsDownloadingCv(false);
+    }
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -128,28 +151,33 @@ export function Navbar({ personalInfo, onOpenCoverLetter, onOpenCv }: NavbarProp
 
             {/* Right Action Buttons - Single Download CV button as requested */}
             <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-              <button
-                type="button"
-                onClick={() =>
-                  downloadPdf(info?.resumeDriveLink, () => {
-                    if (onOpenCv) {
-                      onOpenCv();
-                      setTimeout(() => window.print(), 350);
-                    } else {
-                      window.print();
-                    }
-                  })
-                }
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:py-2 text-xs font-semibold rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white shadow-md shadow-emerald-600/20 transition whitespace-nowrap shrink-0 h-9 cursor-pointer"
-                aria-label="Download CV"
-                title="Download Hammad's CV in PDF format"
-              >
-                <Download className="w-3.5 h-3.5 shrink-0" />
-                <span className="whitespace-nowrap">
-                  <span className="hidden sm:inline">Download CV</span>
-                  <span className="inline sm:hidden">CV</span>
-                </span>
-              </button>
+              {isDownloadingCv ? (
+                <div
+                  className="inline-flex items-center gap-2 px-3 py-1.5 sm:py-2 text-xs font-semibold rounded-xl bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 whitespace-nowrap shrink-0 h-9 select-none"
+                  role="status"
+                  aria-live="polite"
+                >
+                  <Loader2 className="w-3.5 h-3.5 animate-spin shrink-0" />
+                  <span className="whitespace-nowrap">
+                    <span className="hidden sm:inline">Downloading...</span>
+                    <span className="inline sm:hidden">...</span>
+                  </span>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleNavbarDownloadCv}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:py-2 text-xs font-semibold rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white shadow-md shadow-emerald-600/20 transition whitespace-nowrap shrink-0 h-9 cursor-pointer"
+                  aria-label="Download CV"
+                  title="Download Hammad's CV in PDF format"
+                >
+                  <Download className="w-3.5 h-3.5 shrink-0" />
+                  <span className="whitespace-nowrap">
+                    <span className="hidden sm:inline">Download CV</span>
+                    <span className="inline sm:hidden">CV</span>
+                  </span>
+                </button>
+              )}
 
               {/* Mobile / Tablet Hamburger Button */}
               <button
@@ -241,8 +269,8 @@ export function Navbar({ personalInfo, onOpenCoverLetter, onOpenCv }: NavbarProp
                   setMobileMenuOpen(false);
                   if (onOpenCv) {
                     onOpenCv();
-                  } else if (info?.resumeDriveLink) {
-                    window.open(info.resumeDriveLink, "_blank", "noopener,noreferrer");
+                  } else {
+                    downloadPdf(info?.resumeDriveLink, undefined, "cv");
                   }
                 }}
                 className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-md transition cursor-pointer"

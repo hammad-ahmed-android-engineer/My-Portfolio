@@ -115,6 +115,31 @@ textarea {
   color: inherit;
 }
 
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+textarea,
+textarea[name="message"],
+[contenteditable="true"] {
+  cursor: text !important;
+  caret-color: #ffffff !important;
+  color: #f4f4f5 !important;
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 2;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus,
+textarea:focus,
+textarea[name="message"]:focus,
+[contenteditable="true"]:focus {
+  cursor: text !important;
+  caret-color: #ffffff !important;
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.35) !important;
+  outline: none !important;
+}
+
 /* ----------------------------------------------------------------
    IMAGES / MEDIA — never overflow containers
    ---------------------------------------------------------------- */

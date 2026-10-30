@@ -129,21 +129,22 @@ export function useExtensionShield() {
         });
       } catch {}
 
-      // 4. Search and purge ANY elements containing rogue keywords anywhere in DOM
+      // 4. Search and purge ANY elements containing rogue keywords outside #app-root
       try {
         const allCandidates = document.querySelectorAll(
-          '[id*="career" i], [class*="career" i], [id*="copilot" i], [class*="copilot" i], [id*="job" i], [class*="job" i], careerflow-extension, cf-extension, #careerflow-root, #careerflow-sidebar, img[alt*="hello" i], img[alt*="careerflow" i], img[src*="careerflow" i]'
+          '[id*="careerflow" i], [class*="careerflow" i], [id*="copilot" i], [class*="copilot" i], [id*="jobtracker" i], [class*="jobtracker" i], [id*="job-tracker" i], [class*="job-tracker" i], careerflow-extension, cf-extension, #careerflow-root, #careerflow-sidebar, img[alt*="hello" i], img[alt*="careerflow" i], img[src*="careerflow" i]'
         );
         allCandidates.forEach((el) => {
-          if (el instanceof HTMLElement) {
+          if (el instanceof HTMLElement && !el.closest("#app-root")) {
             purgeElement(el);
           }
         });
       } catch {}
 
-      // 5. Inspect shadow roots and custom elements
+      // 5. Inspect shadow roots and custom elements outside #app-root
       try {
         document.querySelectorAll("*").forEach((el) => {
+          if (el instanceof HTMLElement && el.closest("#app-root")) return;
           if (el.shadowRoot) {
             const shadowText = (el.shadowRoot.innerHTML || "").toLowerCase();
             if (ROGUE_KEYWORDS.some((kw) => shadowText.includes(kw))) {
@@ -161,7 +162,11 @@ export function useExtensionShield() {
       try {
         const textElements = document.querySelectorAll("div, section, aside, span, p, img");
         textElements.forEach((node) => {
-          if (node instanceof HTMLElement && node.id !== "app-root") {
+          if (
+            node instanceof HTMLElement &&
+            node.id !== "app-root" &&
+            !node.closest("#app-root")
+          ) {
             const tag = node.tagName.toLowerCase();
             if (tag === "script" || tag === "style" || tag === "next-route-announcer") return;
 
@@ -171,7 +176,12 @@ export function useExtensionShield() {
             const isRogue = ROGUE_KEYWORDS.some((kw) => text.includes(kw) || outer.includes(kw));
             if (isRogue) {
               let target: HTMLElement = node;
-              while (target.parentElement && target.parentElement !== document.body && target.parentElement.id !== "app-root") {
+              while (
+                target.parentElement &&
+                target.parentElement !== document.body &&
+                target.parentElement.id !== "app-root" &&
+                !target.parentElement.closest("#app-root")
+              ) {
                 const parentText = (target.parentElement.textContent || "").toLowerCase();
                 if (ROGUE_KEYWORDS.some((kw) => parentText.includes(kw))) {
                   target = target.parentElement;
@@ -189,20 +199,27 @@ export function useExtensionShield() {
     // Execute immediately
     cleanupRogueExtensions();
 
-    // Listen to all DOM mutations and purge instantly
-    const observer = new MutationObserver(() => {
-      cleanupRogueExtensions();
+    // Listen only to direct children added to document.body (outside #app-root)
+    const observer = new MutationObserver((mutations) => {
+      const hasExternalChange = mutations.some(
+        (m) =>
+          m.target === document.body ||
+          m.target === document.documentElement ||
+          (m.target instanceof HTMLElement && !m.target.closest("#app-root"))
+      );
+      if (hasExternalChange) {
+        cleanupRogueExtensions();
+      }
     });
 
     observer.observe(document.documentElement, {
       childList: true,
       subtree: true,
-      attributes: true,
     });
 
-    // Also run periodic checks
-    const interval = setInterval(cleanupRogueExtensions, 150);
-    const timeout = setTimeout(() => clearInterval(interval), 12000);
+    // Run a few initial checks on startup only
+    const interval = setInterval(cleanupRogueExtensions, 1000);
+    const timeout = setTimeout(() => clearInterval(interval), 5000);
 
     return () => {
       observer.disconnect();

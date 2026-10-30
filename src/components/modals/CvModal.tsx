@@ -17,6 +17,7 @@ import {
   Sparkles,
   CheckCircle2,
   Layers,
+  Loader2,
 } from "lucide-react";
 import {
   PersonalInfo,
@@ -51,6 +52,7 @@ export function CvModal({
   metrics,
 }: CvModalProps) {
   const [copied, setCopied] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   if (!isOpen || !personalInfo) return null;
   const info = personalInfo;
@@ -101,8 +103,14 @@ ${(education || [])
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const handleDownloadPdf = () => {
-    downloadPdf(info.resumeDriveLink);
+  const handleDownloadPdf = async () => {
+    if (isDownloading) return;
+    setIsDownloading(true);
+    try {
+      await downloadPdf(info.resumeDriveLink, undefined, "cv");
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   return (
@@ -136,15 +144,26 @@ ${(education || [])
           </div>
 
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={handleDownloadPdf}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl transition-all bg-emerald-600 hover:bg-emerald-500 text-white shadow-md shadow-emerald-600/20 cursor-pointer"
-              title="Download CV from Google Drive"
-            >
-              <Download className="w-3.5 h-3.5" />
-              <span>Download PDF</span>
-            </button>
+            {isDownloading ? (
+              <div
+                className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-xl bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 select-none"
+                role="status"
+                aria-live="polite"
+              >
+                <Loader2 className="w-3.5 h-3.5 animate-spin shrink-0" />
+                <span>Downloading...</span>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={handleDownloadPdf}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl transition-all bg-emerald-600 hover:bg-emerald-500 text-white shadow-md shadow-emerald-600/20 cursor-pointer"
+                title="Download CV from Google Drive"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Download PDF</span>
+              </button>
+            )}
 
             <button
               type="button"
@@ -164,19 +183,6 @@ ${(education || [])
                 </>
               )}
             </button>
-
-            {info.resumeDriveLink && (
-              <a
-                href={info.resumeDriveLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-xl transition-colors border border-zinc-800 bg-zinc-900 hover:bg-zinc-800 text-zinc-200"
-                title="Open CV in Google Drive"
-              >
-                <ExternalLink className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Drive</span>
-              </a>
-            )}
 
             <button
               type="button"

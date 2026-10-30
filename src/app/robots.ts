@@ -9,8 +9,8 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: "/",
         disallow: [
-          "/admin-console",
-          "/admin-console/",
+          "/admin-panel",
+          "/admin-panel/",
           "/api/portal",
           "/api/portal/",
         ],

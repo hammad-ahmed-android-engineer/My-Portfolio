@@ -128,8 +128,8 @@ export function HeroSection({ onOpenCoverLetter, onOpenCv, personalInfo }: HeroS
                   onClick={() => {
                     if (onOpenCv) {
                       onOpenCv();
-                    } else if (info.resumeDriveLink) {
-                      window.open(info.resumeDriveLink, "_blank", "noopener,noreferrer");
+                    } else {
+                      downloadPdf(info.resumeDriveLink, undefined, "cv");
                     }
                   }}
                   className="inline-flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-emerald-600/25 transition-all hover:-translate-y-0.5 cursor-pointer whitespace-nowrap"

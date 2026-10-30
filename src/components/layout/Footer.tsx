@@ -75,8 +75,8 @@ export function Footer({ personalInfo, onOpenCoverLetter, onOpenCv }: FooterProp
                   onClick={() => {
                     if (onOpenCv) {
                       onOpenCv();
-                    } else if (info.resumeDriveLink) {
-                      window.open(info.resumeDriveLink, "_blank", "noopener,noreferrer");
+                    } else {
+                      downloadPdf(info.resumeDriveLink, undefined, "cv");
                     }
                   }}
                   className="text-center md:text-left text-emerald-400 hover:text-emerald-300 font-semibold transition cursor-pointer"
