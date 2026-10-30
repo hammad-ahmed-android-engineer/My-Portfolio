@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { User, Plus, Trash2, FileText, Activity } from "lucide-react";
 import { PersonalInfo } from "@/types/portfolio";
 
-interface ProfileTabProps {
+interface ProfilePageProps {
   personalInfo: PersonalInfo;
   coverLetterText?: string;
   onUpdateProfile: <K extends keyof PersonalInfo>(field: K, value: PersonalInfo[K]) => void;
@@ -13,14 +13,14 @@ interface ProfileTabProps {
   onUpdateCoverLetter: (text: string) => void;
 }
 
-export function ProfileTab({
-  personalInfo,
-  coverLetterText = "",
-  onUpdateProfile,
-  onUpdateStat,
-  onRemoveStat,
-  onUpdateCoverLetter,
-}: ProfileTabProps) {
+  export function ProfilePage({
+    personalInfo,
+    coverLetterText = "",
+    onUpdateProfile,
+    onUpdateStat,
+    onRemoveStat,
+    onUpdateCoverLetter,
+  }: ProfilePageProps) {
   const [newStatKey, setNewStatKey] = useState("");
   const [newStatValue, setNewStatValue] = useState("");
 
@@ -46,9 +46,10 @@ export function ProfileTab({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-1">
-            <label className="text-xs text-zinc-400">Full Name</label>
+            <label className="text-xs text-zinc-400">Full Name *</label>
             <input
               type="text"
+              required
               value={personalInfo.name}
               onChange={(e) => onUpdateProfile("name", e.target.value)}
               className="w-full px-3 py-2 rounded-xl bg-zinc-950 border border-zinc-800 text-xs text-zinc-100 focus:border-emerald-500 outline-none"
@@ -56,9 +57,10 @@ export function ProfileTab({
           </div>
 
           <div className="space-y-1">
-            <label className="text-xs text-zinc-400">Professional Title</label>
+            <label className="text-xs text-zinc-400">Professional Title *</label>
             <input
               type="text"
+              required
               value={personalInfo.title}
               onChange={(e) => onUpdateProfile("title", e.target.value)}
               className="w-full px-3 py-2 rounded-xl bg-zinc-950 border border-zinc-800 text-xs text-zinc-100 focus:border-emerald-500 outline-none"
@@ -128,9 +130,10 @@ export function ProfileTab({
         </div>
 
         <div className="space-y-1">
-          <label className="text-xs text-zinc-400">Tagline / Headline</label>
+          <label className="text-xs text-zinc-400">Tagline / Subtitle *</label>
           <input
             type="text"
+            required
             value={personalInfo.tagline}
             onChange={(e) => onUpdateProfile("tagline", e.target.value)}
             className="w-full px-3 py-2 rounded-xl bg-zinc-950 border border-zinc-800 text-xs text-zinc-100 focus:border-emerald-500 outline-none"
@@ -138,9 +141,10 @@ export function ProfileTab({
         </div>
 
         <div className="space-y-1">
-          <label className="text-xs text-zinc-400">Summary / Professional Bio</label>
+          <label className="text-xs text-zinc-400">Summary / Professional Bio *</label>
           <textarea
             rows={3}
+            required
             value={personalInfo.summary}
             onChange={(e) => onUpdateProfile("summary", e.target.value)}
             className="w-full px-3 py-2 rounded-xl bg-zinc-950 border border-zinc-800 text-xs text-zinc-100 focus:border-emerald-500 outline-none resize-none"

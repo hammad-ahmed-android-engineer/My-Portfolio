@@ -1,8 +1,6 @@
 # Hammad Ahmed — Senior Android Engineer Portfolio
 
-![Live Portfolio](https://img.shields.io/badge/Live_Portfolio-hammad--ahmed--android--engineer.vercel.app-10b981?style=flat-square)![Next.js](https://img.shields.io/badge/Next.js-16.4-000000?style=flat-square&logo=next.js)![React](https://img.shields.io/badge/React-19.2-149eca?style=flat-square&logo=react)![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6?style=flat-square&logo=typescript)![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8?style=flat-square&logo=tailwindcss)![MongoDB Atlas](https://img.shields.io/badge/MongoDB_Atlas-Mongoose_9-47A248?style=flat-square&logo=mongodb)![Node.js](https://img.shields.io/badge/Node.js-20.x+-339933?style=flat-square&logo=nodedotjs&logoColor=white)![License](https://img.shields.io/badge/License-Apache_2.0-blue?style=flat-square)
-
-A modern, full-stack, dynamic engineering portfolio built with **Next.js 16 (App Router & Turbopack)**, **React 19**, **TypeScript 5**, **Tailwind CSS v4**, and **MongoDB Atlas**.
+![Live Portfolio](https://img.shields.io/badge/Live_Portfolio-hammad--ahmed--android--engineer.vercel.app-10b981?style=flat-square)![Next.js](https://img.shields.io/badge/Next.js-16.4-000000?style=flat-square&logo=next.js)![React](https://img.shields.io/badge/React-19.2-149eca?style=flat-square&logo=react)![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6?style=flat-square&logo=typescript)![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8?style=flat-square&logo=tailwindcss)![MongoDB Atlas](https://img.shields.io/badge/MongoDB_Atlas-Mongoose_9-47A248?style=flat-square&logo=mongodb)![Node.js](https://img.shields.io/badge/Node.js-20.x+-339933?style=flat-square&logo=nodedotjs&logoColor=white)![License](https://img.shields.io/badge/License-Apache_2.0-blue?style=flat-square)A modern, full-stack, dynamic engineering portfolio built with **Next.js 16 (App Router & Turbopack)**, **React 19**, **TypeScript 5**, **Tailwind CSS v4**, and **MongoDB Atlas**.
 
 All portfolio content (personal profile, hero statistics, career timeline, flagship case studies, architecture layers, technical skills, education, impact metrics, and CV / cover letter document links) is served dynamically from **MongoDB Atlas**. Static media such as the profile photo and project banners are served from the `public/` directory.
 
@@ -30,16 +28,17 @@ All portfolio content (personal profile, hero statistics, career timeline, flags
 | **Language** | [TypeScript 5](https://www.typescriptlang.org/) | Strict end-to-end typing, domain contracts, compile-time safety |
 | **Database & ODM** | [MongoDB Atlas](https://www.mongodb.com/atlas) + [Mongoose 9](https://mongoosejs.com/) | Cloud document persistence with serverless connection pooling |
 | **Styling** | [Tailwind CSS v4](https://tailwindcss.com/) | Responsive utility-first layout, glassmorphism surfaces, dark/light themes |
-| **Security** | [CryptoJS](https://cryptojs.gitbook.io/) + Node.js `crypto` | AES-256 payload and storage encryption, CSRF protection, NoSQL sanitizer, rate limiting |
+| **SEO & Discovery** | Next.js Metadata API + Schema.org JSON-LD | Dynamic XML sitemap, multi-crawler `robots.txt`, and search engine indexing |
 | **Icons** | [Lucide React](https://lucide.dev/) + custom SVG brand icons | Vector iconography across all portfolio sections |
 
 ---
 
 ## ✨ Key Features
 
-### 1. Database-Driven Content
+### 1. Database-Driven Content & Admin Panel
 
 - All portfolio sections (`PersonalInfo`, `Services`, `Projects`, `Experiences`, `SkillCategories`, `Education`, `Metrics`, `CoverLetter`) are fetched live from MongoDB Atlas on the server and hydrated into the client.
+- Dedicated **Admin Panel** (`/admin-panel`) with summary list views, dedicated Add/Edit pages, drag-and-drop & chronological sorting for work experience, and instant database persistence.
 - Static images (profile photo and project banners) are served from `public/`.
 
 ### 2. Interactive Android Device Simulator (`InteractivePhone`)
@@ -57,15 +56,7 @@ A phone-frame component with four live app modes, smooth internal scrolling, and
 
 - `CvModal`: Recruiter-ready CV preview with verified impact metrics, skill matrix, work experience, key production systems, and academic credentials.
 - `CoverLetterModal`: Formatted cover letter reader loaded from MongoDB.
-- **PDF download**: Supports direct PDF download from cloud storage with client-side PDF generation as a fallback.
-
-### 4. Security
-
-- AES-256 encrypted public content payloads and local storage
-- CSRF origin verification
-- Recursive NoSQL injection sanitizer
-- Rate limiting
-- Runtime request payload validation
+- **Direct PDF Download**: Supports seamless, in-page PDF download from cloud storage with loading indicators and client-side print fallback.
 
 ---
 
@@ -78,24 +69,22 @@ A phone-frame component with four live app modes, smooth internal scrolling, and
 │  1. Presentation Layer (src/components/)                                     │
 │     ├─ Public Sections: Hero, Overview + InteractivePhone, Metrics,          │
 │     │  Services, Architecture, Projects, Experience, Skills, Education       │
-│     └─ Modals: CvModal, CoverLetterModal, ProjectDetailModal                 │
+│     ├─ Modals: CvModal, CoverLetterModal, ProjectDetailModal                 │
+│     └─ Admin Panel: AdminDashboard, Experience/Projects/Services/Skills Pages│
 ├──────────────────────────────────────────────────────────────────────────────┤
-│  2. API Route Layer (src/app/api/)                                           │
-│     └─ GET  /api/content   -> Public encrypted portfolio read                │
+│  2. API & Metadata Route Layer (src/app/)                                    │
+│     ├─ GET  /api/content   -> Public portfolio data read                     │
+│     ├─ GET  /api/download  -> Direct PDF document stream                     │
+│     ├─ GET  /sitemap.xml   -> Dynamic MongoDB & image sitemap                │
+│     └─ GET  /robots.txt    -> Search & crawler directives                    │
 ├──────────────────────────────────────────────────────────────────────────────┤
-│  3. Validation & Security Layer (src/server/validation/ & security/)         │
-│     ├─ portfolioValidator.ts  -> Request schema validation                   │
-│     ├─ inputSanitizer.ts      -> NoSQL injection sanitizer                   │
-│     ├─ rateLimiter.ts         -> Rate limiter                                │
-│     ├─ csrf.ts                -> CSRF origin verification                    │
-│     └─ crypto.ts              -> AES-256 payload & storage encryption        │
+│  3. Business Logic Layer (src/server/services/)                              │
+│     ├─ portfolioService.ts -> Portfolio data orchestration                   │
+│     └─ seoService.ts       -> Search engine sitemap broadcasting             │
 ├──────────────────────────────────────────────────────────────────────────────┤
-│  4. Business Logic Layer (src/server/services/)                              │
-│     └─ portfolioService.ts    -> Portfolio data orchestration                │
-├──────────────────────────────────────────────────────────────────────────────┤
-│  5. Data Access Layer (src/server/repositories/ & db/)                       │
+│  4. Data Access Layer (src/server/repositories/ & lib/)                      │
 │     ├─ portfolioRepository.ts -> Atomic MongoDB queries & persistence        │
-│     ├─ connection.ts          -> Cached Mongoose connection pool             │
+│     ├─ db.ts                  -> Cached Mongoose connection pool             │
 │     └─ models/Portfolio.ts    -> Mongoose schemas & TypeScript contracts     │
 └──────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -109,33 +98,36 @@ Portfolio/
 ├── public/                         # Static images (profile photo, project banners)
 ├── src/
 │   ├── app/                        # App Router pages, metadata & API routes
+│   │   ├── admin-panel/            # Admin dashboard & login pages
 │   │   ├── api/
-│   │   │   └── content/route.ts    # Public portfolio data endpoint
+│   │   │   ├── content/route.ts    # Public portfolio data endpoint
+│   │   │   ├── download/route.ts   # Direct PDF download proxy
+│   │   │   └── portal/             # Admin content & SEO endpoints
 │   │   ├── globals.css             # Tailwind v4 styles
-│   │   ├── layout.tsx              # Root layout & metadata
-│   │   └── page.tsx                # Server-rendered home page
+│   │   ├── layout.tsx              # Root layout, metadata & JSON-LD schema
+│   │   ├── page.tsx                # Server-rendered home page
+│   │   ├── robots.ts               # Crawler directives
+│   │   └── sitemap.ts              # Dynamic XML sitemap
 │   ├── components/
+│   │   ├── admin/                  # AdminDashboard, pages, and common inputs
 │   │   ├── layout/                 # Navbar, Footer
 │   │   ├── modals/                 # CvModal, CoverLetterModal, ProjectDetailModal
 │   │   ├── phone/                  # InteractivePhone, SarHajjApp, EcommerceApp,
 │   │   │                           # EdgeLightingApp, ToolboxApp, types
 │   │   ├── providers/              # ThemeContext (dark / light mode)
-│   │   ├── sections/               # Hero, Overview, Metrics, Services, Architecture,
-│   │   │                           # Projects, Experience, Skills, Education
+│   │   ├── sections/               # Hero, ImpactMetrics, Services, Architecture,
+│   │   │                           # Projects, Experience, Skills, Education, Contact
 │   │   ├── ui/                     # BrandIcons (LinkedIn, GitHub, custom SVGs)
 │   │   └── PortfolioHome.tsx       # Root client container
 │   ├── config/                     # Server configuration
 │   ├── hooks/                      # useActiveSection, useCopyToClipboard, useScrollPosition
+│   ├── lib/                        # Database connection & service helpers
 │   ├── models/                     # Mongoose models & interfaces
 │   ├── server/
-│   │   ├── db/                     # Cached MongoDB connection
-│   │   ├── http/                   # Standardized API responses
 │   │   ├── repositories/           # Data access layer
-│   │   ├── security/               # crypto, csrf, inputSanitizer, rateLimiter
-│   │   ├── services/               # portfolioService
-│   │   └── validation/             # Payload validation
-│   ├── types/                      # api, portfolio contracts
-│   └── utils/                      # apiClient, basePath, documentUtils, secureStorage
+│   │   └── services/               # portfolioService, seoService
+│   ├── types/                      # admin, api, portfolio contracts
+│   └── utils/                      # apiClient, basePath, documentUtils
 ├── next.config.ts
 ├── package.json
 ├── tsconfig.json

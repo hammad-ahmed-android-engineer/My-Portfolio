@@ -3,7 +3,7 @@
 import React from "react";
 import { Globe, Radio, ExternalLink, CheckCircle2, Compass, ShieldCheck } from "lucide-react";
 
-interface SeoTabProps {
+interface SeoPageProps {
   seoStatus: any;
   isPinging: boolean;
   pingResult: any;
@@ -67,12 +67,12 @@ const BROWSER_ECOSYSTEMS = [
   },
 ];
 
-export function SeoTab({
-  seoStatus,
-  isPinging,
-  pingResult,
-  onPingSearchEngines,
-}: SeoTabProps) {
+  export function SeoPage({
+    seoStatus,
+    isPinging,
+    pingResult,
+    onPingSearchEngines,
+  }: SeoPageProps) {
   return (
     <div className="py-8 space-y-6">
       <div className="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 space-y-6">
@@ -165,11 +165,10 @@ export function SeoTab({
               return (
                 <div
                   key={engine.key}
-                  className={`p-3.5 rounded-xl border transition-all space-y-1.5 ${
-                    liveStatus
+                  className={`p-3.5 rounded-xl border transition-all space-y-1.5 ${liveStatus
                       ? "bg-emerald-950/20 border-emerald-500/30"
                       : "bg-zinc-950/80 border-zinc-800/80"
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-xs font-bold text-white">{engine.name}</span>

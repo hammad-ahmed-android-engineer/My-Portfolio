@@ -1,7 +1,7 @@
 import { ComponentType } from "react";
 import { LucideProps } from "lucide-react";
 
-export type AdminTab =
+  export type AdminPage =
   | "profile"
   | "services"
   | "projects"
@@ -12,8 +12,8 @@ export type AdminTab =
   | "seo"
   | "settings";
 
-export interface AdminTabConfig {
-  id: AdminTab;
+export interface AdminPageConfig {
+  id: AdminPage;
   label: string;
   icon: ComponentType<LucideProps>;
 }

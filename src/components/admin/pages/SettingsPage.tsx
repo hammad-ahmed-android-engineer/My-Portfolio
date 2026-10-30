@@ -25,7 +25,7 @@ export type DeletableSectionKey =
   | "education"
   | "metrics";
 
-interface SettingsTabProps {
+interface SettingsPageProps {
   onReseed: () => void;
   onClearSection: (section: DeletableSectionKey, label: string) => void;
   onClearCache: () => void;
@@ -41,14 +41,14 @@ interface SettingsTabProps {
   isSaving: boolean;
 }
 
-export function SettingsTab({
-  onReseed,
-  onClearSection,
-  onClearCache,
-  onDeleteAllData,
-  counts,
-  isSaving,
-}: SettingsTabProps) {
+  export function SettingsPage({
+    onReseed,
+    onClearSection,
+    onClearCache,
+    onDeleteAllData,
+    counts,
+    isSaving,
+  }: SettingsPageProps) {
   const sectionDeleteControls: Array<{
     key: DeletableSectionKey;
     label: string;
