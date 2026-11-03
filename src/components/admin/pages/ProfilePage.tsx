@@ -13,14 +13,14 @@ interface ProfilePageProps {
   onUpdateCoverLetter: (text: string) => void;
 }
 
-  export function ProfilePage({
-    personalInfo,
-    coverLetterText = "",
-    onUpdateProfile,
-    onUpdateStat,
-    onRemoveStat,
-    onUpdateCoverLetter,
-  }: ProfilePageProps) {
+export function ProfilePage({
+  personalInfo,
+  coverLetterText = "",
+  onUpdateProfile,
+  onUpdateStat,
+  onRemoveStat,
+  onUpdateCoverLetter,
+}: ProfilePageProps) {
   const [newStatKey, setNewStatKey] = useState("");
   const [newStatValue, setNewStatValue] = useState("");
 

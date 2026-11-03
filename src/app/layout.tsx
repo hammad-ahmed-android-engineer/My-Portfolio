@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/providers/ThemeContext";
 import { ExtensionShield } from "@/components/common/ExtensionShield";
 
@@ -215,6 +216,7 @@ export default function RootLayout({
         <div id="app-root" className="flex min-h-full flex-col flex-1">
           <ThemeProvider>{children}</ThemeProvider>
         </div>
+        <Analytics />
       </body>
     </html>
   );
